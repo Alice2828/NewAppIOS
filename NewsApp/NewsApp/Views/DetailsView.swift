@@ -13,7 +13,7 @@ typealias MethodToDismiss = ()->Void
 struct DetailsView: View {
     @Binding var article: Article
 //
-    @ObservedObject var viewModel: ViewModel
+    @ObservedObject var viewModel: NewsViewModel
     @Environment(\.presentationMode) var presentationMode
     var body: some View {
         VStack{

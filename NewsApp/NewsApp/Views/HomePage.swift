@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct NewsList: View {
-    @ObservedObject var viewModel: ViewModel
+    @ObservedObject var viewModel: NewsViewModel
     var body: some View {
         ZStack{
             
@@ -23,7 +23,7 @@ struct NewsList: View {
 
 struct ArticleRow: View {
     @State var article: Article
-    @ObservedObject var viewModel: ViewModel
+    @ObservedObject var viewModel: NewsViewModel
     
     var body: some View {
         NavigationLink(destination: DetailsView(article: $article, viewModel: viewModel)) {
@@ -45,7 +45,7 @@ struct ArticleRow: View {
 
 
 struct HomePage: View {
-    @ObservedObject var viewModel = ViewModel()
+    @ObservedObject var viewModel = NewsViewModel()
     
     var body: some View {
         NewsList(viewModel: viewModel)
