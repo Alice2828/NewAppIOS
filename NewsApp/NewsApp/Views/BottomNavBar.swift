@@ -9,22 +9,28 @@ import SwiftUI
 
 
 struct BottomNavBar: View {
+    @ObservedObject var viewModel: NewsViewModel
     var body: some View {
         TabView {
-            HomePage()
+            TopPageView(viewModel: viewModel)
                 .tabItem {
-                    Image(systemName: "heart.fill")
-                    Text("Favourites")
+                    Image(systemName: "home.fill")
+                    Text("Top")
                 }
-            Text("Friends Screen")
+            SearchPageView(viewModel: viewModel)
                 .tabItem {
-                    Image(systemName: "person.fill")
+                    Image(systemName: "search.fill")
                     Text("Friends")
                 }
             Text("Nearby Screen")
                 .tabItem {
-                    Image(systemName: "mappin.circle.fill")
-                    Text("Nearby")
+                    Image(systemName: "heart.fill")
+                    Text("Likes")
+                }
+            Text("Profile Screen")
+                .tabItem {
+                    Image(systemName: "person.fill")
+                    Text("Profile")
                 }
         }
     }

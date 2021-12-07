@@ -17,19 +17,16 @@ struct NetworkHelper {
         var result: ResultWithError<T> = .failure(NetworkResponseError.failed)
         if let error = error {
             result = .failure(error)
-            print("wtf")
             return result
         }
 
         guard let response = response as? HTTPURLResponse else {
             result = .failure(NetworkResponseError.httpURLResponseCastFailed)
-            print("wtf 2")
             return result
         }
         switch handleNetworkResponse(response) {
         case .success:
             guard let responseData = data else {
-                print("wtf 3")
                 result = .failure(NetworkResponseError.noData)
                 return result
             }
@@ -40,11 +37,9 @@ struct NetworkHelper {
                 result = .success(apiResponse)
             } catch {
                 print(error)
-                print("wtf 4")
                 result = .failure(NetworkResponseError.unableToDecode)
             }
         case .failure(let networkFailureError):
-            print("wtf 5")
             result = .failure(networkFailureError)
         }
         return result

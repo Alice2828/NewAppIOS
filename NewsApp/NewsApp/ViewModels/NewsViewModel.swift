@@ -36,7 +36,19 @@ final class NewsViewModel: ObservableObject {
     
     func getNewsSearchable(){
         state = .loading
-        newsRepo.getNewsSearchable(qInTitle: "bitcoin", sortBy: "popularity"){ [weak self] result in
+        newsRepo.getNewsSearchable(qInTitle: "bitcoin"){ [weak self] result in
+            switch result {
+            case .success(let apiPost):
+                DispatchQueue.main.async { self?.state = .loaded(apiPost.articles)}
+            case .failure(let error):
+                DispatchQueue.main.async { self?.state = .failed(error)}
+            }
+        }
+    }
+    
+    func getTop(){
+        state = .loading
+        newsRepo.getTop{ [weak self] result in
             switch result {
             case .success(let apiPost):
                 DispatchQueue.main.async { self?.state = .loaded(apiPost.articles)}

@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct Base: View {
+    @ObservedObject var viewModel = NewsViewModel()
     var body: some View {
-        BottomNavBar()
+        BottomNavBar(viewModel: viewModel)
     }
 }
 

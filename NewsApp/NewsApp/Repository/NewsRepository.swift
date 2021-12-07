@@ -9,8 +9,8 @@ import Foundation
 
 protocol NewsRepositoryProtocol {
     func getNews(completion: @escaping (ResultWithError<ApiPost>) -> ())
-    func getNewsSearchable(qInTitle: String, sortBy: String, completion: @escaping (ResultWithError<ApiPost>) -> ())
-    //    func getTop(country: String) -> ResultWithError<ApiPost>
+    func getNewsSearchable(qInTitle: String, completion: @escaping (ResultWithError<ApiPost>) -> ())
+    func getTop(completion: @escaping (ResultWithError<ApiPost>) -> ())
 }
 
 final class NewsRepository: NewsRepositoryProtocol {
@@ -22,14 +22,17 @@ final class NewsRepository: NewsRepositoryProtocol {
         })
     }
     
-    func getNewsSearchable(qInTitle: String, sortBy: String, completion: @escaping (ResultWithError<ApiPost>) -> ()) {
-        router.request(.getNewsSearchable(qInTitle: qInTitle, sortBy: sortBy), completion: {
+    func getNewsSearchable(qInTitle: String, completion: @escaping (ResultWithError<ApiPost>) -> ()) {
+        router.request(.getNewsSearchable(qInTitle: qInTitle), completion: {
             result in
             completion(result)
         })
     }
-    //
-    //    func getTop(country: String) -> ResultWithError<ApiPost> {
-    //        //router.request(.getTop(country: country))
-    //    }
+    
+    func getTop(completion: @escaping (ResultWithError<ApiPost>) -> ()) {
+        router.request(.getTop, completion: {
+            result in
+            completion(result)
+        })
+    }
 }

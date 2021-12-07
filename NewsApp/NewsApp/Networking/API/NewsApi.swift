@@ -10,8 +10,8 @@ let API_KEY = "b0fe0f0da9634ed890cefa676654c7d8"
 
 enum NewsAPI {
     case getNews
-    case getNewsSearchable(qInTitle: String, sortBy: String)
-    case getTop(country: String)
+    case getNewsSearchable(qInTitle: String)
+    case getTop
     //case getSources()
 }
 
@@ -43,11 +43,11 @@ extension NewsAPI: EndPointType {
     var task: HTTPTask {
         switch self {
         case .getNews:
-            return .requestParameters(bodyParameters: nil, bodyEncoding: .urlAndJsonEncoding, urlParameters: ["apiKey": API_KEY])
-        case .getNewsSearchable(let qInTitle, let sortBy):
-            return .requestParameters(bodyParameters: nil, bodyEncoding: .urlEncoding, urlParameters: ["qInTitle": qInTitle, "sortBy": sortBy, "apiKey": API_KEY])
-        case .getTop(let country):
-            return .requestParameters(bodyParameters: nil, bodyEncoding: .urlAndJsonEncoding, urlParameters: ["country": country, "apiKey": API_KEY])
+            return .requestParameters(bodyParameters: nil, bodyEncoding: .urlEncoding, urlParameters: ["qInTitle": "bitcoin", "apiKey": API_KEY])
+        case .getNewsSearchable(let qInTitle):
+            return .requestParameters(bodyParameters: nil, bodyEncoding: .urlEncoding, urlParameters: ["qInTitle": qInTitle, "apiKey": API_KEY])
+        case .getTop:
+            return .requestParameters(bodyParameters: nil, bodyEncoding: .urlEncoding, urlParameters: ["country": "us", "apiKey": API_KEY])
         }
     }
 
