@@ -9,30 +9,50 @@ import Foundation
 
 typealias NetworkResult<T: Decodable> = Observable<ResultWithError<T>?>
 
+typealias NetworkRouterCompletion<T: Decodable> = (_ result: ResultWithError<T>) -> ()
+
 protocol NetworkRouter: AnyObject {
     associatedtype EndPoint: EndPointType
-    func request<T: Decodable>(_ route: EndPoint) -> NetworkResult<T>
+    func request<T: Decodable>(_ route: EndPoint,  completion: @escaping NetworkRouterCompletion<T>)
     func cancel()
 }
 
 final class Router<EndPoint: EndPointType>: NetworkRouter {
     private var task: URLSessionTask?
 
-    func request<T: Decodable>(_ route: EndPoint) -> NetworkResult<T> {
-        let observable: MutableObservable<ResultWithError<T>?> = .init(nil)
+//    func request<T: Decodable>(_ route: EndPoint) -> NetworkResult<T> {
+//        let observable: MutableObservable<ResultWithError<T>?> = .init(nil)
+//        let session = URLSession.shared
+//        do {
+//            let request = try buildRequest(from: route)
+//            NetworkLogger.log(request: request)
+//            task = session.dataTask(with: request) { data, response, error in
+//                NetworkLogger.log(response: response)
+//                observable.wrappedValue = NetworkHelper.shared.handle(data, response, error)
+//            }
+//        } catch {
+//            observable.wrappedValue = .failure(error)
+//        }
+//        task?.resume()
+//        return observable
+//    }
+    func request<T: Decodable>(_ route: EndPoint, completion: @escaping NetworkRouterCompletion<T>){
+        // let observable: MutableObservable<ResultWithError<T>?> = .init(nil)
+        var res: ResultWithError<T> = .failure(NetworkResponseError.failed)
         let session = URLSession.shared
         do {
             let request = try buildRequest(from: route)
             NetworkLogger.log(request: request)
             task = session.dataTask(with: request) { data, response, error in
                 NetworkLogger.log(response: response)
-                observable.wrappedValue = NetworkHelper.shared.handle(data, response, error)
+                res = NetworkHelper.shared.handle(data, response, error)
+                completion(res)
             }
         } catch {
-            observable.wrappedValue = .failure(error)
+            res = .failure(error)
+            completion(res)
         }
         task?.resume()
-        return observable
     }
 
     func cancel() {
@@ -64,6 +84,7 @@ final class Router<EndPoint: EndPointType>: NetworkRouter {
     
     private func configureParameters(bodyParameters: Parameters?, bodyEncoding: ParameterEncoding, urlParameters: Parameters?, request: inout URLRequest) throws {
         do {
+            print(request)
             try bodyEncoding.encode(urlRequest: &request, bodyParameters: bodyParameters, urlParameters: urlParameters)
         } catch {
             throw error

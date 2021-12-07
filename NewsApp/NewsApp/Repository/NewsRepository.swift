@@ -8,18 +8,28 @@
 import Foundation
 
 protocol NewsRepositoryProtocol {
-    func getNews(qInTitle: String, sortBy: String,  apiKey: String) -> NetworkResult<ApiPost>
-    func getTop(country: String, apiKey: String) -> NetworkResult<ApiPost>
+    func getNews(completion: @escaping (ResultWithError<ApiPost>) -> ())
+    func getNewsSearchable(qInTitle: String, sortBy: String, completion: @escaping (ResultWithError<ApiPost>) -> ())
+    //    func getTop(country: String) -> ResultWithError<ApiPost>
 }
 
 final class NewsRepository: NewsRepositoryProtocol {
     private let router = Router<NewsAPI>()
-
-    func getNews(qInTitle: String, sortBy: String,  apiKey: String) -> NetworkResult<ApiPost> {
-        router.request(.getNews(qInTitle: qInTitle, sortBy: sortBy, apiKey: apiKey))
+    
+    func getNews(completion: @escaping (ResultWithError<ApiPost>) -> ()) {
+        router.request(.getNews, completion: {result in
+            completion(result)
+        })
     }
-
-    func getTop(country: String, apiKey: String) -> NetworkResult<ApiPost> {
-        router.request(.getTop(country: country, apiKey: apiKey))
+    
+    func getNewsSearchable(qInTitle: String, sortBy: String, completion: @escaping (ResultWithError<ApiPost>) -> ()) {
+        router.request(.getNewsSearchable(qInTitle: qInTitle, sortBy: sortBy), completion: {
+            result in
+            completion(result)
+        })
     }
+    //
+    //    func getTop(country: String) -> ResultWithError<ApiPost> {
+    //        //router.request(.getTop(country: country))
+    //    }
 }

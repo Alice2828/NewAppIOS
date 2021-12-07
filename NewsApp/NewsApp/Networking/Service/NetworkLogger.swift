@@ -14,12 +14,12 @@ final class NetworkLogger {
         
         let urlAsString = request.url?.absoluteString ?? ""
         let urlComponents = NSURLComponents(string: urlAsString)
-
+        
         let method = request.httpMethod ?? ""
         let path = urlComponents?.path ?? ""
         let query = urlComponents?.query ?? ""
         let host = urlComponents?.host ?? ""
-
+        
         var logOutput = """
                         \(urlAsString) \n
                         \(method) \(path)?\(query) HTTP/1.1 \n
@@ -33,6 +33,6 @@ final class NetworkLogger {
         }
         print(logOutput)
     }
-
+    
     static func log(response: URLResponse?) {}
 }

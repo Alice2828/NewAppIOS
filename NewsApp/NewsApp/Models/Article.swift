@@ -8,11 +8,16 @@
 import Foundation
 
 struct Article: Identifiable, Equatable, Hashable, Codable{
-    var id = UUID()
-    
-    var author: String
+    var id: String? {
+        didSet {
+            if id == nil
+            {
+                id = randomString(length: 5)
+            }
+        }
+    }
+    var author: String?
     var title: String
-    var gender: String
     var description: String
     var url: String
     var urlToImage: String
@@ -21,6 +26,11 @@ struct Article: Identifiable, Equatable, Hashable, Codable{
     
     static func ==(lhs: Article, rhs: Article) -> Bool {
         return lhs.title == rhs.title && lhs.content == rhs.content
+    }
+    
+    func randomString(length: Int) -> String {
+        let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        return String((0..<length).map{ _ in letters.randomElement()! })
     }
 }
 

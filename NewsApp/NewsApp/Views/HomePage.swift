@@ -10,12 +10,22 @@ import SwiftUI
 struct NewsList: View {
     @ObservedObject var viewModel: NewsViewModel
     var body: some View {
-        ZStack{
-            
-            List {
-                ForEach(viewModel.news, id: \.self) { article in
-                    ArticleRow(article: article, viewModel: viewModel)
+        
+        switch viewModel.state {
+        case .idle:
+            Color.clear.onAppear(perform:  viewModel.getNewsSearchable)
+        case .loading:
+            ProgressView()
+        case .failed(let error):
+            ErrorView(error: error, retryAction: viewModel.getNewsSearchable)
+        case .loaded(let news):
+            ZStack{
+                List {
+                    ForEach(news, id: \.self) { article in
+                        ArticleRow(article: article, viewModel: viewModel)
+                    }
                 }
+                
             }
         }
     }
@@ -42,7 +52,22 @@ struct ArticleRow: View {
         }
     }
 }
-
+struct ErrorView: View {
+    let error: Error
+    let retryAction: () -> Void
+    
+    var body: some View {
+        VStack {
+            Text("An Error Occured")
+                .font(.title)
+            Text(error.localizedDescription)
+                .font(.callout)
+                .multilineTextAlignment(.center)
+                .padding(.bottom, 40).padding()
+            Button(action: retryAction, label: { Text("Retry").bold() })
+        }
+    }
+}
 
 struct HomePage: View {
     @ObservedObject var viewModel = NewsViewModel()
@@ -50,6 +75,7 @@ struct HomePage: View {
     var body: some View {
         NewsList(viewModel: viewModel)
     }
+    
 }
 
 struct HomePage_Previews: PreviewProvider {
