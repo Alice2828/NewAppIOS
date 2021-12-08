@@ -11,7 +11,7 @@ struct SearchPageView: View {
     @ObservedObject var viewModel: NewsViewModel
     
     var body: some View {
-        NewsList(viewModel: viewModel, request: viewModel.getNewsSearchable, list: viewModel.searchedNews, state: viewModel.searchState)
+        NewsList(viewModel: viewModel, type: .search)
     }
     
 }

@@ -12,16 +12,23 @@ struct BottomNavBar: View {
     @ObservedObject var viewModel: NewsViewModel
     var body: some View {
         TabView {
-            TopPageView(viewModel: viewModel)
-                .tabItem {
-                    Image(systemName: "home.fill")
-                    Text("Top")
-                }
-            SearchPageView(viewModel: viewModel)
-                .tabItem {
-                    Image(systemName: "search.fill")
-                    Text("Friends")
-                }
+            NavigationView {
+                TopPageView(viewModel: viewModel).navigationTitle("Top News")
+            }
+            .tabItem {
+                Image(systemName: "house.circle")
+                Text("Top")
+            }
+            
+            NavigationView {
+                SearchPageView(viewModel: viewModel).navigationTitle("Search News")
+            }
+            
+            .tabItem {
+                Image(systemName: "magnifyingglass")
+                Text("Search")
+            }
+            
             Text("Nearby Screen")
                 .tabItem {
                     Image(systemName: "heart.fill")

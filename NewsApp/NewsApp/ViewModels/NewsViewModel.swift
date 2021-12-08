@@ -23,7 +23,6 @@ final class NewsViewModel: ObservableObject {
     
     init(newsRepo: NewsRepositoryProtocol = NewsRepository()) {
         self.newsRepo = newsRepo
-        getTop()
     }
     
     func getNewsSearchable(){
