@@ -11,6 +11,6 @@ struct ApiPost: Codable{
    
     var status: String
     var totalResults: Int
-    var articles: [Article]
+    var articles: [Article]?
 }
 

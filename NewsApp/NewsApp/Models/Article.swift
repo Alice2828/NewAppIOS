@@ -17,12 +17,12 @@ struct Article: Identifiable, Equatable, Hashable, Codable{
         }
     }
     var author: String?
-    var title: String
-    var description: String
-    var url: String
-    var urlToImage: String
-    var publishedAt: String
-    var content: String
+    var title: String?
+    var description: String?
+    var url: String?
+    var urlToImage: String?
+    var publishedAt: String?
+    var content: String?
     
     static func ==(lhs: Article, rhs: Article) -> Bool {
         return lhs.title == rhs.title && lhs.content == rhs.content

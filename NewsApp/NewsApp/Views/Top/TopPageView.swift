@@ -10,7 +10,8 @@ import SwiftUI
 struct TopPageView: View {
     @ObservedObject var viewModel: NewsViewModel
     var body: some View {
-        NewsList(viewModel: viewModel, request: viewModel.getTop)
+        NewsList(viewModel: viewModel, request: viewModel.getTop, list: viewModel.topNews,
+                 state: viewModel.topState)
     }
 }
 
