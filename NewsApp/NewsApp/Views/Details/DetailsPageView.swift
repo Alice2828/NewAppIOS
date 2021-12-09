@@ -11,7 +11,7 @@ import SwiftUI
 typealias MethodToDismiss = ()->Void
 
 struct DetailsPageView: View {
-    @Binding var article: Article
+ var article: Article
 //
     @ObservedObject var viewModel: NewsViewModel
     @Environment(\.presentationMode) var presentationMode

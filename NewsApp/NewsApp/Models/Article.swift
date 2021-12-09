@@ -8,14 +8,17 @@
 import Foundation
 
 struct Article: Identifiable, Equatable, Hashable, Codable{
-    var id: String? {
-        didSet {
-            if id == nil
-            {
-                id = randomString(length: 5)
-            }
-        }
-    }
+//    var id: String? {
+//        didSet {
+//            if id == nil
+//            {
+//                id = randomString(length: 5)
+//                print("ID LALA LOL \(id)")
+//            }
+//        }
+//    }
+    var id: String = randomString(length: 5)
+    
     var author: String?
     var title: String?
     var description: String?
@@ -28,9 +31,19 @@ struct Article: Identifiable, Equatable, Hashable, Codable{
         return lhs.title == rhs.title && lhs.content == rhs.content
     }
     
-    func randomString(length: Int) -> String {
-        let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-        return String((0..<length).map{ _ in letters.randomElement()! })
+    enum CodingKeys: String, CodingKey{
+        case author = "author"
+        case title = "title"
+        case description = "description"
+        case url = "url"
+        case urlToImage = "urlToImage"
+        case publishedAt = "publishedAt"
+        case content = "content"
     }
 }
 
+
+func randomString(length: Int) -> String {
+    let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+    return String((0..<length).map{ _ in letters.randomElement()! })
+}

@@ -6,11 +6,13 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct TopPageView: View {
     @ObservedObject var viewModel: NewsViewModel
+    var context: NSManagedObjectContext
     var body: some View {
-        NewsList(viewModel: viewModel, type: .top)
+        NewsList(viewModel: viewModel, type: .top, context: context)
     }
 }
 

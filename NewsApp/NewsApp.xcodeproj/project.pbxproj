@@ -13,6 +13,7 @@
 		F02600FE2760CF7B00B9B62C /* SearchableNewsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02600FD2760CF7B00B9B62C /* SearchableNewsViewModel.swift */; };
 		F02601002760DB4F00B9B62C /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02600FF2760DB4F00B9B62C /* ImageLoader.swift */; };
 		F02601022760DFEB00B9B62C /* NewsCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02601012760DFEB00B9B62C /* NewsCardView.swift */; };
+		F0260104276218B300B9B62C /* LikesPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0260103276218B300B9B62C /* LikesPageView.swift */; };
 		F0E5694127560C5D00D59BB1 /* NewsAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E5694027560C5D00D59BB1 /* NewsAppApp.swift */; };
 		F0E5694327560C5D00D59BB1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E5694227560C5D00D59BB1 /* ContentView.swift */; };
 		F0E5694527560C5F00D59BB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F0E5694427560C5F00D59BB1 /* Assets.xcassets */; };
@@ -52,6 +53,7 @@
 		F02600FD2760CF7B00B9B62C /* SearchableNewsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchableNewsViewModel.swift; sourceTree = "<group>"; };
 		F02600FF2760DB4F00B9B62C /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		F02601012760DFEB00B9B62C /* NewsCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCardView.swift; sourceTree = "<group>"; };
+		F0260103276218B300B9B62C /* LikesPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikesPageView.swift; sourceTree = "<group>"; };
 		F0E5693D27560C5D00D59BB1 /* NewsApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewsApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0E5694027560C5D00D59BB1 /* NewsAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsAppApp.swift; sourceTree = "<group>"; };
 		F0E5694227560C5D00D59BB1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -117,6 +119,7 @@
 		F02600F6275FB77F00B9B62C /* Likes */ = {
 			isa = PBXGroup;
 			children = (
+				F0260103276218B300B9B62C /* LikesPageView.swift */,
 			);
 			path = Likes;
 			sourceTree = "<group>";
@@ -390,6 +393,7 @@
 				F02600F1275FB57E00B9B62C /* NewsListView.swift in Sources */,
 				F0E5695E27564BEA00D59BB1 /* BottomNavBar.swift in Sources */,
 				F0E5698E2759352200D59BB1 /* URLParamEnncoding.swift in Sources */,
+				F0260104276218B300B9B62C /* LikesPageView.swift in Sources */,
 				F0E5698827592E5100D59BB1 /* NewsRepository.swift in Sources */,
 				F02600FE2760CF7B00B9B62C /* SearchableNewsViewModel.swift in Sources */,
 				F0E5694327560C5D00D59BB1 /* ContentView.swift in Sources */,

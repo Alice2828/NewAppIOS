@@ -6,30 +6,32 @@
 //
 
 import SwiftUI
-
+import CoreData
 
 struct BottomNavBar: View {
     @ObservedObject var viewModel: NewsViewModel
+    @Environment(\.managedObjectContext) var context
     var body: some View {
         TabView {
             NavigationView {
-                TopPageView(viewModel: viewModel).navigationTitle("Top News")
-            }
-            .tabItem {
-                Image(systemName: "house.circle")
-                Text("Top")
-            }
+                TopPageView(viewModel: viewModel, context: context).navigationTitle("Top News")
+            }.navigationViewStyle(StackNavigationViewStyle())
+                .tabItem {
+                    Image(systemName: "house.circle")
+                    Text("Top")
+                }
             
             NavigationView {
-                SearchPageView(viewModel: viewModel).navigationTitle("Search News")
-            }
+                SearchPageView(viewModel: viewModel, context: context).navigationTitle("Search News")
+            }.navigationViewStyle(StackNavigationViewStyle())
+                .tabItem {
+                    Image(systemName: "magnifyingglass")
+                    Text("Search")
+                }
             
-            .tabItem {
-                Image(systemName: "magnifyingglass")
-                Text("Search")
-            }
-            
-            Text("Nearby Screen")
+            NavigationView {
+                LikesPageView(viewModel: viewModel, context: context).navigationTitle("My favorites")
+            }.navigationViewStyle(StackNavigationViewStyle())
                 .tabItem {
                     Image(systemName: "heart.fill")
                     Text("Likes")
