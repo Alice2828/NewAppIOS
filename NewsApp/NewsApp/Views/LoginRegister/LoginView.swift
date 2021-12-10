@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import FirebaseAuth
 
 struct WelcomeText: View {
     var body: some View {
@@ -53,8 +54,11 @@ struct Password: View {
     }
 }
 struct BtnLogin: View {
+    @Binding var email: String
+    @Binding var password: String
+    
     var body: some View {
-        Button("LOGIN"){}
+        Button("LOGIN"){login()}
             .font(.headline)
             .foregroundColor(.white)
             .frame(width: 220, height: 60)
@@ -63,6 +67,16 @@ struct BtnLogin: View {
             .cornerRadius(15.0)
         
     }
+    
+    func login() {
+            Auth.auth().signIn(withEmail: email, password: password) { (result, error) in
+                if error != nil {
+                    print(error?.localizedDescription ?? "")
+                } else {
+                    print("success")
+                }
+            }
+        }
 }
 
 struct BtnForgotPassword: View {
@@ -110,7 +124,7 @@ struct CardView: View{
                         Spacer()
                         BtnForgotPassword()
                     }
-                    BtnLogin()
+                    BtnLogin(email: $email, password: $password)
                     Footer()
                 }
                 .padding(.horizontal, 10)

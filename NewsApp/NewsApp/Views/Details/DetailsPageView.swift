@@ -6,49 +6,65 @@
 //
 
 import SwiftUI
-
+import CoreData
 
 typealias MethodToDismiss = ()->Void
 
 struct DetailsPageView: View {
- var article: Article
-//
+    @State var article: Article
     @ObservedObject var viewModel: NewsViewModel
     @Environment(\.presentationMode) var presentationMode
     var body: some View {
         VStack{
-//            ContactDetail(person: $person).padding()
-//            CallButton(action: goBack).padding()
-//            DeleteButton(person: $person, action: goBack, contactsViewModel: contactsViewModel).padding()
+            ArticleDetail(article: $article, viewModel: viewModel).padding()
+            //            CallButton(action: goBack).padding()
+            //            DeleteButton(person: $person, action: goBack, contactsViewModel: contactsViewModel).padding()
             Spacer()
         }
-        .navigationTitle("Contact Info")
+        .navigationTitle(article.title ?? "News Details")
         .navigationBarTitleDisplayMode(.inline)
     }
     
-//    private func goBack() {
-//        presentationMode.wrappedValue.dismiss()
-//    }
+    //    private func goBack() {
+    //        presentationMode.wrappedValue.dismiss()
+    //    }
 }
 
-//struct ContactDetail: View{
-//    @Binding var person: Person
-//    
-//    var body: some View {
-//        HStack {
-//            person.image
-//                .resizable()
-//                .frame(width: 80, height: 80)
-//                .padding()
-//            
-//            VStack(alignment: .leading, spacing: 10, content: {
-//                Text(person.name).multilineTextAlignment(.leading).font(.system(size: 20,  weight: .heavy))
-//                Text(person.phone).multilineTextAlignment(.leading)
-//            })
-//            Spacer()
-//        }
-//    }
-//}
+struct ArticleDetail: View{
+    @Binding var article: Article
+    @ObservedObject var viewModel: NewsViewModel
+    
+    var imageToDisplay: Image {
+        if viewModel.likes.first(where: {$0.articleId == (article.id )}) != nil {
+            return Image(systemName: "heart.fill")
+        } else {
+            return Image(systemName: "heart")
+        }
+    }
+    
+    var body: some View {
+        HStack {
+            //            article.image
+            //                .resizable()
+            //                .frame(width: 80, height: 80)
+            //                .padding()
+            
+            VStack(alignment: .leading, spacing: 10, content: {
+                Text(article.description ?? "").multilineTextAlignment(.leading).font(.system(size: 20,  weight: .heavy))
+                Text(article.url ?? "").multilineTextAlignment(.leading)
+                Button(action:{
+                    viewModel.saveOrDeleteLike(id: article.id )
+                }){
+                    
+                    imageToDisplay.renderingMode(.original)
+                }.padding(.trailing, 20)
+                    .padding(.top, 20)
+                    .frame(width: 10, height: 10)
+            })
+            Spacer()
+        }
+    }
+}
 //
 //struct CallButton: View{
 //    let action: MethodToDismiss

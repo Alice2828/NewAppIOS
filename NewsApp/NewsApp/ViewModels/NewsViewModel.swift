@@ -11,8 +11,10 @@ import SwiftUI
 
 final class NewsViewModel: ObservableObject {
     private var newsRepo: NewsRepositoryProtocol
+    @Environment(\.managedObjectContext) var context
     @Published var topNews: [Article] = [Article]()
     @Published var searchedNews: [Article] = [Article]()
+    @Published var searchedText: String = "bitcoin"
     @FetchRequest(
         entity: LikedArticle.entity(),
         sortDescriptors: [
@@ -34,9 +36,24 @@ final class NewsViewModel: ObservableObject {
         self.newsRepo = newsRepo
     }
     
-    func getNewsSearchable(){
+    func getNewsSearchableDefault(){
         searchState = .loading
         newsRepo.getNewsSearchable(qInTitle: "bitcoin"){ [weak self] result in
+            switch result {
+            case .success(let apiPost):
+                DispatchQueue.main.async {
+                    self?.searchState = .loaded
+                    self?.searchedNews = apiPost.articles ?? [Article]()
+                }
+            case .failure(let error):
+                DispatchQueue.main.async { self?.searchState = .failed(error)}
+            }
+        }
+    }
+    
+    func getNewsSearchable(){
+        searchState = .loading
+        newsRepo.getNewsSearchable(qInTitle: searchedText){ [weak self] result in
             switch result {
             case .success(let apiPost):
                 DispatchQueue.main.async {
@@ -63,7 +80,7 @@ final class NewsViewModel: ObservableObject {
         }
     }
     
-    func saveOrDeleteLike(context: NSManagedObjectContext, id: String){
+    func saveOrDeleteLike(id: String){
         print("ID LALA \(id)")
         if (likes.contains(where: {$0.articleId == id})){
             if let like = likes.first(where: {$0.articleId == id}){
@@ -76,13 +93,14 @@ final class NewsViewModel: ObservableObject {
             entity.userId = "kek"
             print("baddd")
         }
-        do{
-            try context.save()
-            print("success")
+        context.perform{
+            do{
+                try self.context.save()
+                print("success")
+            }
+            catch{
+                print(error.localizedDescription)
+            }
         }
-        catch{
-            print(error.localizedDescription)
-        }
-        
     }
 }

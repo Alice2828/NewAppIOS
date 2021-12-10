@@ -10,11 +10,11 @@ import CoreData
 
 struct BottomNavBar: View {
     @ObservedObject var viewModel: NewsViewModel
-    @Environment(\.managedObjectContext) var context
+    
     var body: some View {
         TabView {
             NavigationView {
-                TopPageView(viewModel: viewModel, context: context).navigationTitle("Top News")
+                TopPageView(viewModel: viewModel).navigationTitle("Top News")
             }.navigationViewStyle(StackNavigationViewStyle())
                 .tabItem {
                     Image(systemName: "house.circle")
@@ -22,7 +22,7 @@ struct BottomNavBar: View {
                 }
             
             NavigationView {
-                SearchPageView(viewModel: viewModel, context: context).navigationTitle("Search News")
+                SearchPageView(viewModel: viewModel).navigationTitle("Search News")
             }.navigationViewStyle(StackNavigationViewStyle())
                 .tabItem {
                     Image(systemName: "magnifyingglass")
@@ -30,7 +30,7 @@ struct BottomNavBar: View {
                 }
             
             NavigationView {
-                LikesPageView(viewModel: viewModel, context: context).navigationTitle("My favorites")
+                LikesPageView(viewModel: viewModel).navigationTitle("My favorites")
             }.navigationViewStyle(StackNavigationViewStyle())
                 .tabItem {
                     Image(systemName: "heart.fill")

@@ -10,10 +10,9 @@ import CoreData
 
 struct LikesPageView: View {
     @ObservedObject var viewModel: NewsViewModel
-    var context: NSManagedObjectContext
     
     var body: some View {
-        NewsList(viewModel: viewModel, type: .likes, context: context)
+        NewsList(viewModel: viewModel, type: .likes)
     }
 }
 //
