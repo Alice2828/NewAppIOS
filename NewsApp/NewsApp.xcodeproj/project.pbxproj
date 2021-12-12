@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -18,6 +18,8 @@
 		F026010C276342C200B9B62C /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F026010B276342C200B9B62C /* SearchView.swift */; };
 		F026010E27634D8C00B9B62C /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = F026010D27634D8B00B9B62C /* UIApplication.swift */; };
 		F026011027636CB500B9B62C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F026010F27636CB500B9B62C /* GoogleService-Info.plist */; };
+		F02601122763A3A800B9B62C /* ViewExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02601112763A3A800B9B62C /* ViewExt.swift */; };
+		F0260115276620AF00B9B62C /* ProfilePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0260114276620AF00B9B62C /* ProfilePageView.swift */; };
 		F0E5694127560C5D00D59BB1 /* NewsAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E5694027560C5D00D59BB1 /* NewsAppApp.swift */; };
 		F0E5694327560C5D00D59BB1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E5694227560C5D00D59BB1 /* ContentView.swift */; };
 		F0E5694527560C5F00D59BB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F0E5694427560C5F00D59BB1 /* Assets.xcassets */; };
@@ -64,6 +66,8 @@
 		F026010B276342C200B9B62C /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		F026010D27634D8B00B9B62C /* UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
 		F026010F27636CB500B9B62C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		F02601112763A3A800B9B62C /* ViewExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExt.swift; sourceTree = "<group>"; };
+		F0260114276620AF00B9B62C /* ProfilePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePageView.swift; sourceTree = "<group>"; };
 		F0E5693D27560C5D00D59BB1 /* NewsApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewsApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0E5694027560C5D00D59BB1 /* NewsAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsAppApp.swift; sourceTree = "<group>"; };
 		F0E5694227560C5D00D59BB1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -124,7 +128,6 @@
 				65F866B578F924330E1CB08E /* Pods-NewsApp.debug.xcconfig */,
 				709111F21C481DF8232738F1 /* Pods-NewsApp.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -186,6 +189,14 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
+		F02601132766209E00B9B62C /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				F0260114276620AF00B9B62C /* ProfilePageView.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
 		F0E5693427560C5D00D59BB1 = {
 			isa = PBXGroup;
 			children = (
@@ -242,6 +253,7 @@
 				F0E5695727560E5D00D59BB1 /* UiColor.swift */,
 				F02600FF2760DB4F00B9B62C /* ImageLoader.swift */,
 				F026010D27634D8B00B9B62C /* UIApplication.swift */,
+				F02601112763A3A800B9B62C /* ViewExt.swift */,
 			);
 			path = Ext;
 			sourceTree = "<group>";
@@ -341,6 +353,7 @@
 		F0E5698F2759357E00D59BB1 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				F02601132766209E00B9B62C /* Profile */,
 				F02600FC275FBA7200B9B62C /* Details */,
 				F02600F9275FB9E500B9B62C /* Search */,
 				F02600F7275FB78900B9B62C /* LoginRegister */,
@@ -478,6 +491,7 @@
 				F02601022760DFEB00B9B62C /* NewsCardView.swift in Sources */,
 				F026010E27634D8C00B9B62C /* UIApplication.swift in Sources */,
 				F0E5695827560E5D00D59BB1 /* UiColor.swift in Sources */,
+				F0260115276620AF00B9B62C /* ProfilePageView.swift in Sources */,
 				F02600F1275FB57E00B9B62C /* NewsListView.swift in Sources */,
 				F0E5695E27564BEA00D59BB1 /* BottomNavBar.swift in Sources */,
 				F0E5698E2759352200D59BB1 /* URLParamEnncoding.swift in Sources */,
@@ -496,6 +510,7 @@
 				F0E5698527592E1F00D59BB1 /* Observable.swift in Sources */,
 				F026010A276337D400B9B62C /* Consts.swift in Sources */,
 				F0E5698C2759350800D59BB1 /* ParamEncoding.swift in Sources */,
+				F02601122763A3A800B9B62C /* ViewExt.swift in Sources */,
 				F0E5698227592C8600D59BB1 /* Router.swift in Sources */,
 				F0E5694D27560C5F00D59BB1 /* NewsApp.xcdatamodeld in Sources */,
 				F0E5698A27592EC700D59BB1 /* ApiPost.swift in Sources */,

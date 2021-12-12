@@ -9,10 +9,9 @@ import SwiftUI
 import CoreData
 
 struct LikesPageView: View {
-    @ObservedObject var viewModel: NewsViewModel
     
     var body: some View {
-        NewsList(viewModel: viewModel, type: .likes)
+        NewsList(type: .likes)
     }
 }
 //

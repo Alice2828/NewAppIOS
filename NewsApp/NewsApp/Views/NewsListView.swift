@@ -15,7 +15,7 @@ enum TypeList{
 }
 
 struct NewsList: View {
-    @ObservedObject var viewModel: NewsViewModel
+    @EnvironmentObject var viewModel: NewsViewModel
     var type: TypeList
     
     var body: some View {
@@ -34,7 +34,7 @@ struct NewsList: View {
                     List {
                         ForEach(viewModel.topNews, id: \.self) { article in
                             
-                            LikedArticleRow(article: article, viewModel: viewModel)
+                            LikedArticleRow(article: article)
                         }
                     }
                     
@@ -42,7 +42,7 @@ struct NewsList: View {
             }
         case .search:
             VStack{
-                SearchBar(text: $viewModel.searchedText, viewModel: viewModel)
+                SearchBar(text: $viewModel.searchedText)
                     .padding()
                 Spacer()
                 switch viewModel.searchState {
@@ -66,7 +66,7 @@ struct NewsList: View {
                         ZStack{
                             List {
                                 ForEach(viewModel.searchedNews, id: \.self) { article in
-                                    LikedArticleRow(article: article, viewModel: viewModel)
+                                    LikedArticleRow(article: article)
                                 }
                             }
                         }
@@ -74,26 +74,17 @@ struct NewsList: View {
                 }
             }
         case .likes:
-            switch viewModel.searchState {
-            case .idle:
-                Color.clear.onAppear(perform:  viewModel.getNewsSearchableDefault)
-            case .loading:
-                ProgressView()
-            case .failed(let error):
-                ErrorView(error: error, retryAction: viewModel.getNewsSearchableDefault)
-            case .loaded:
-                ZStack{
-                    List {
-                        ForEach(viewModel.likes, id: \.self) { liked in
-                            if let article = viewModel.topNews.first(where:{$0.id == liked.articleId}){
-                                LikedArticleRow(article: article, viewModel: viewModel)
-                            }
-                            else
-                                if let article = viewModel.searchedNews.first(where:{$0.id == liked.articleId}){
-                                    LikedArticleRow(article: article, viewModel: viewModel)
-                                }
+            
+            ZStack{
+                List {
+                    ForEach(viewModel.likesIds, id: \.self) { articleId in
+                        if let article = viewModel.topNews.first(where:{$0.id == articleId}){
+                            LikedArticleRow(article: article)
                         }
-                        
+                        else
+                            if let article = viewModel.searchedNews.first(where:{$0.id == articleId}){
+                                LikedArticleRow(article: article)
+                            }
                     }
                     
                 }
@@ -103,23 +94,11 @@ struct NewsList: View {
     }
 }
 
-//struct ArticleRow: View {
-//    @State var article: Article
-//    @ObservedObject var viewModel: NewsViewModel
-//    
-//    var body: some View {
-//        NavigationLink(destination: DetailsPageView(article: $article, viewModel: viewModel)) {
-//            NewsCardView(article: $article)
-//        }
-//    }
-//}
-
 struct LikedArticleRow: View {
     @State var article: Article
-    @ObservedObject var viewModel: NewsViewModel
     
     var body: some View {
-        LikedNewsCardView(viewModel: viewModel, article: $article)
+        LikedNewsCardView(article: $article)
             .onAppear(perform: {print("ID LALA LA \(article.id)")})
     }
 }

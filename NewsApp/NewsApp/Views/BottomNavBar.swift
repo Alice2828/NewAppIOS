@@ -9,12 +9,11 @@ import SwiftUI
 import CoreData
 
 struct BottomNavBar: View {
-    @ObservedObject var viewModel: NewsViewModel
-    
+    @Binding var loggedIn: Bool
     var body: some View {
         TabView {
             NavigationView {
-                TopPageView(viewModel: viewModel).navigationTitle("Top News")
+                TopPageView().navigationTitle("Top News")
             }.navigationViewStyle(StackNavigationViewStyle())
                 .tabItem {
                     Image(systemName: "house.circle")
@@ -22,7 +21,7 @@ struct BottomNavBar: View {
                 }
             
             NavigationView {
-                SearchPageView(viewModel: viewModel).navigationTitle("Search News")
+                SearchPageView().navigationTitle("Search News")
             }.navigationViewStyle(StackNavigationViewStyle())
                 .tabItem {
                     Image(systemName: "magnifyingglass")
@@ -30,13 +29,13 @@ struct BottomNavBar: View {
                 }
             
             NavigationView {
-                LikesPageView(viewModel: viewModel).navigationTitle("My favorites")
+                LikesPageView().navigationTitle("My favorites")
             }.navigationViewStyle(StackNavigationViewStyle())
                 .tabItem {
                     Image(systemName: "heart.fill")
                     Text("Likes")
                 }
-            Text("Profile Screen")
+            ProfilePageView(loggedIn: $loggedIn)
                 .tabItem {
                     Image(systemName: "person.fill")
                     Text("Profile")

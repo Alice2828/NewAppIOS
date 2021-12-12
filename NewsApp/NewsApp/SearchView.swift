@@ -12,7 +12,7 @@ struct SearchBar: View {
     
     @State private var isEditing = false
     
-    @ObservedObject var viewModel: NewsViewModel
+    @EnvironmentObject var viewModel: NewsViewModel
     
     var body: some View {
         HStack {

@@ -6,16 +6,22 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct Base: View {
-    @ObservedObject var viewModel = NewsViewModel()
+    @EnvironmentObject var viewModel: NewsViewModel
+    @Environment(\.managedObjectContext) private var context
+    
+    @Binding var loggedIn: Bool
     var body: some View {
-        BottomNavBar(viewModel: viewModel)
+        BottomNavBar(loggedIn: $loggedIn).onAppear{
+            self.viewModel.context = context
+        }
     }
 }
 
 struct Base_Previews: PreviewProvider {
     static var previews: some View {
-        Base()
+        Base(loggedIn: .constant(true))
     }
 }

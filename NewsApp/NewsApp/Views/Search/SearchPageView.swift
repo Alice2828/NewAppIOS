@@ -9,10 +9,9 @@ import SwiftUI
 import CoreData
 
 struct SearchPageView: View {
-    @ObservedObject var viewModel: NewsViewModel
     
     var body: some View {
-        NewsList(viewModel: viewModel, type: .search)
+        NewsList(type: .search)
     }
     
 }

@@ -9,9 +9,8 @@ import SwiftUI
 import CoreData
 
 struct TopPageView: View {
-    @ObservedObject var viewModel: NewsViewModel
     var body: some View {
-        NewsList(viewModel: viewModel, type: .top)
+        NewsList(type: .top)
     }
 }
 

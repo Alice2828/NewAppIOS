@@ -54,41 +54,53 @@ struct Password: View {
     }
 }
 struct BtnLogin: View {
+    @Binding var loggedIn: Bool
     @Binding var email: String
     @Binding var password: String
+    @State private var showingAlert = false
     
     var body: some View {
         Button("LOGIN"){login()}
-            .font(.headline)
-            .foregroundColor(.white)
-            .frame(width: 220, height: 60)
-            .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
-            .background(Color(UIColor.init(rgb:  0x81d5fa)))
-            .cornerRadius(15.0)
+        .font(.headline)
+        .foregroundColor(.white)
+        .frame(width: 220, height: 60)
+        .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
+        .background(Color(UIColor.init(rgb:  0x81d5fa)))
+        .cornerRadius(15.0)
+        .alert(isPresented: $showingAlert) {
+            Alert(title: Text("Error..."), message: Text("Register or check email"), dismissButton: .cancel())
+        }
         
     }
     
     func login() {
+        if (email != "" && password != ""){
             Auth.auth().signIn(withEmail: email, password: password) { (result, error) in
-                if error != nil {
-                    print(error?.localizedDescription ?? "")
+                if error == nil {
+                    if Auth.auth().currentUser!.isEmailVerified{
+                        loggedIn = true
+                        print("success")
+                    }
+                    else {
+                        showingAlert = true
+                        print(error?.localizedDescription ?? "")
+                    }
+                    
                 } else {
-                    print("success")
+                    showingAlert = true
+                    print(error?.localizedDescription ?? "")
                 }
             }
         }
-}
-
-struct BtnForgotPassword: View {
-    var body: some View {
-        Text("Forgot password?")
-            .font(.headline)
-            .foregroundColor(.blue)
-            .padding()
+        else{
+            showingAlert = true
+        }
     }
 }
 
 struct Footer: View {
+    @Binding var goToRegister: Bool
+    
     var body: some View {
         HStack(alignment: .center)
         {
@@ -97,11 +109,15 @@ struct Footer: View {
                 .padding()
                 .foregroundColor(.gray)
             
-            Text("REGISTER")
-                .font(.headline)
-                .foregroundColor(.blue)
-                .padding()
-            
+            Button(action: {
+                self.goToRegister = true
+                
+            }) {
+                Text("REGISTER")
+                    .font(.headline)
+                    .foregroundColor(.blue)
+                    .padding()
+            }
         }
     }
 }
@@ -109,6 +125,8 @@ struct Footer: View {
 struct CardView: View{
     @Binding var email: String
     @Binding var password: String
+    @Binding var goToRegister: Bool
+    @Binding var loggedIn: Bool
     
     var body: some View{
         GeometryReader { geometry in
@@ -120,17 +138,13 @@ struct CardView: View{
                     WelcomeText()
                     Email(email: $email)
                     Password(password: $password)
-                    HStack{
-                        Spacer()
-                        BtnForgotPassword()
-                    }
-                    BtnLogin(email: $email, password: $password)
-                    Footer()
+                    BtnLogin(loggedIn: $loggedIn, email: $email, password: $password)
+                    Footer(goToRegister: $goToRegister)
                 }
                 .padding(.horizontal, 10)
                 .padding(.vertical, 10)
             }.compositingGroup()
-            .shadow(radius: 10)
+                .shadow(radius: 10)
             
         }
     }
@@ -139,6 +153,8 @@ struct CardView: View{
 struct LoginView: View {
     @State var email: String = ""
     @State var password: String = ""
+    @State var goToRegister: Bool = false
+    @Binding var loggedIn: Bool
     
     var body: some View{
         GeometryReader { geometry in
@@ -148,18 +164,18 @@ struct LoginView: View {
                     .fill(Color(UIColor.init(rgb:  0x81d5fa)))
                     .frame(width: geometry.size.width, height: geometry.size.height/2, alignment: .top)
                 
-                CardView(email: $email, password: $password)
+                CardView(email: $email, password: $password, goToRegister: $goToRegister, loggedIn: $loggedIn)
                     .frame(maxWidth: .infinity, maxHeight: geometry.size.height*0.2, alignment: .center)
                     .padding()
                     .padding(.top, 100)
             }
-        }
+        }.navigate(to: RegisterView(), when: $goToRegister)
     }
 }
 
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView()
+        LoginView(loggedIn: .constant(true))
     }
 }

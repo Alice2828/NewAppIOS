@@ -33,9 +33,10 @@ struct DetailsPageView: View {
 struct ArticleDetail: View{
     @Binding var article: Article
     @ObservedObject var viewModel: NewsViewModel
+    @Environment(\.managedObjectContext) private var context
     
     var imageToDisplay: Image {
-        if viewModel.likes.first(where: {$0.articleId == (article.id )}) != nil {
+        if viewModel.likesIds.first(where: {$0 == (article.id )}) != nil {
             return Image(systemName: "heart.fill")
         } else {
             return Image(systemName: "heart")
@@ -53,7 +54,7 @@ struct ArticleDetail: View{
                 Text(article.description ?? "").multilineTextAlignment(.leading).font(.system(size: 20,  weight: .heavy))
                 Text(article.url ?? "").multilineTextAlignment(.leading)
                 Button(action:{
-                    viewModel.saveOrDeleteLike(id: article.id )
+                    viewModel.saveOrDeleteLike(id: article.id)
                 }){
                     
                     imageToDisplay.renderingMode(.original)

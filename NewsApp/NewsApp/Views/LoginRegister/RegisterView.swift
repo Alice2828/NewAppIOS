@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import FirebaseAuth
 
 struct RegisterText: View {
     var body: some View {
@@ -69,20 +70,50 @@ struct PasswordRegister: View {
     }
 }
 struct BtnRegister: View {
+    @Binding var password: String
+    @Binding var name: String
+    @Binding var email: String
+    @State private var showingAlert = false
+    @Binding var showingAlertSuccess: Bool
+    
     var body: some View {
-        Button("Register"){}
-            .font(.headline)
-            .foregroundColor(.white)
-            .frame(width: 220, height: 60)
-            .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
-            .background(Color(UIColor.init(rgb:  0x81d5fa)))
-            .cornerRadius(15.0)
-        
+        Button("Register"){register()}
+        .font(.headline)
+        .foregroundColor(.white)
+        .frame(width: 220, height: 60)
+        .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
+        .background(Color(UIColor.init(rgb:  0x81d5fa)))
+        .cornerRadius(15.0)
+        .alert(isPresented: $showingAlert) {
+            Alert(title: Text("Error..."), message: Text("Empty values"), dismissButton: .cancel())
+        }
+        .alert(isPresented: $showingAlertSuccess) {
+            Alert(title: Text("Success!"), message: Text("Check email"), dismissButton: .cancel())
+        }
+    }
+    func register() {
+        if (email != "" && password != "" && name != ""){
+            Auth.auth().createUser(withEmail: email, password: password){ (result, error) in
+                Auth.auth().currentUser?.sendEmailVerification(completion: nil)
+                if error != nil {
+                    showingAlert = true
+                    print(error?.localizedDescription ?? "")
+                } else {
+                    showingAlertSuccess = true
+                    print("success")
+                }
+            }
+        }
+        else{
+            showingAlert = true
+        }
     }
 }
 
 
 struct FooterRegister: View {
+    @Binding var goToLogin: Bool
+    
     var body: some View {
         HStack(alignment: .center)
         {
@@ -91,10 +122,15 @@ struct FooterRegister: View {
                 .padding()
                 .foregroundColor(.gray)
             
-            Text("LOGIN")
-                .font(.headline)
-                .foregroundColor(.blue)
-                .padding()
+            Button(action: {
+                self.goToLogin = true
+                
+            }) {
+                Text("LOGIN")
+                    .font(.headline)
+                    .foregroundColor(.blue)
+                    .padding()
+            }
             
         }
     }
@@ -104,6 +140,8 @@ struct CardViewRegister: View{
     @Binding var email: String
     @Binding var password: String
     @Binding var name: String
+    @Binding var goToLogin: Bool
+    @Binding var showingAlertSuccess: Bool
     
     var body: some View{
         GeometryReader { geometry in
@@ -116,13 +154,13 @@ struct CardViewRegister: View{
                     NameRegister(name: $name)
                     EmailRegister(email: $email)
                     PasswordRegister(password: $password)
-                    BtnRegister()
-                    FooterRegister()
+                    BtnRegister(password: $password, name: $name, email: $email, showingAlertSuccess : $showingAlertSuccess)
+                    FooterRegister(goToLogin: $goToLogin)
                 }
                 .padding(.horizontal, 10)
                 .padding(.vertical, 10)
             }.compositingGroup()
-            .shadow(radius: 10)
+                .shadow(radius: 10)
             
         }
     }
@@ -132,6 +170,8 @@ struct RegisterView: View {
     @State var email: String = ""
     @State var password: String = ""
     @State var name: String = ""
+    @State var goToLogin: Bool = false
+    @State var showingAlertSuccess = false
     
     var body: some View{
         GeometryReader { geometry in
@@ -141,20 +181,13 @@ struct RegisterView: View {
                     .fill(Color(UIColor.init(rgb:  0x81d5fa)))
                     .frame(width: geometry.size.width, height: geometry.size.height/2, alignment: .top)
                 
-                CardViewRegister(email: $email, password: $password, name: $name)
+                CardViewRegister(email: $email, password: $password, name: $name, goToLogin: $goToLogin, showingAlertSuccess: $showingAlertSuccess)
                     .frame(maxWidth: .infinity, maxHeight: geometry.size.height*0.2, alignment: .center)
                     .padding()
                     .padding(.top, 100)
             }
-        }
+        }.navigate(to: LoginView(loggedIn: .constant(false)), when: $goToLogin)
+            .navigate(to: LoginView(loggedIn: .constant(false)), when: $showingAlertSuccess)
     }
 }
-
-
-struct RegisterView_Previews: PreviewProvider {
-    static var previews: some View {
-        RegisterView()
-    }
-}
-
 
