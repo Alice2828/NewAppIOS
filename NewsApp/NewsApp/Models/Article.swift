@@ -9,7 +9,6 @@ import Foundation
 
 struct Article: Identifiable, Equatable, Hashable, Codable{
     var id: String = randomString(length: 5)
-    var articleId: String = randomString(length: 5)
     
     var author: String?
     var title: String?
@@ -21,6 +20,11 @@ struct Article: Identifiable, Equatable, Hashable, Codable{
     
     static func ==(lhs: Article, rhs: Article) -> Bool {
         return lhs.title == rhs.title && lhs.content == rhs.content
+    }
+    
+    func hash(into hasher: inout Hasher){
+        hasher.combine(title)
+        hasher.combine(content)
     }
     
     enum CodingKeys: String, CodingKey{

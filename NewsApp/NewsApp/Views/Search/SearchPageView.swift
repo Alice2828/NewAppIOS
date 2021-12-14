@@ -11,7 +11,7 @@ import CoreData
 struct SearchPageView: View {
     
     var body: some View {
-        NewsList(type: .search)
+        SearchListView()
     }
     
 }

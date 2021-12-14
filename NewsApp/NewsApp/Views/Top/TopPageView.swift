@@ -10,12 +10,6 @@ import CoreData
 
 struct TopPageView: View {
     var body: some View {
-        NewsList(type: .top)
+        TopListView()
     }
 }
-
-//struct TopPageView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        TopPageView()
-//    }
-//}

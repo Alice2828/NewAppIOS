@@ -19,24 +19,6 @@ struct LikesListView: View {
                 }
                 
             }
-        }
+        }.onAppear{likesViewModel.fetch()}
     }
 }
-
-//struct NewsArticleRow: View {
-//    @State var article: Article
-//
-//    var body: some View {
-//        NewsCardView(article: $article)
-//            .onAppear(perform: {print("ID LALA LA \(article.id)")})
-//    }
-//}
-//
-//struct LikedArticleRow: View {
-//    @State var article: LikedArticle
-//
-//    var body: some View {
-//        LikedNewsCardView(article: $article)
-//            .onAppear(perform: {print("ID LALA LA \(article.id)")})
-//    }
-//}

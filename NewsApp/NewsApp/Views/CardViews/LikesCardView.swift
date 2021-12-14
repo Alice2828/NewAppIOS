@@ -1,27 +1,33 @@
 //
-//  NewsCardView.swift
+//  LikesCardView.swift
 //  NewsApp
 //
-//  Created by Lebedeva Alice on 08.12.2021.
+//  Created by Lebedeva Alice on 14.12.2021.
 //
 
+import Foundation
 import SwiftUI
-import CoreData
 
-
-struct NewsCardView: View {
+struct LikedNewsCardView: View {
     @ObservedObject var imageLoader = ImageLoader()
-    @EnvironmentObject var newsViewModel: NewsViewModel
+    @EnvironmentObject var likesViewModel: LikesViewModel
     @Environment(\.managedObjectContext) private var context
-    @Binding var article: Article
+    @Binding var article: LikedArticle
     
     let cardAndImageWidth: CGFloat = 170
     let imageHeight: CGFloat = 150
+    var imageToDisplay: Image {
+        if likesViewModel.likesObservable.first(where: {$0.title == article.title}) != nil {
+            return Image(systemName: "heart.fill")
+        } else {
+            return Image(systemName: "heart")
+        }
+    }
     
     var body: some View {
         
         ZStack{
-            NavigationLink(destination: DetailsPageView(article: article, newsViewModel: newsViewModel)) {EmptyView()}
+            NavigationLink(destination: DetailsPageView(article: Article(author: article.author, title: article.title, description: article.descrip, url: article.url, urlToImage: article.urlToImage, publishedAt: article.publishedAt, content: article.content))) {EmptyView()}
             HStack{
                 //card itself
                 ZStack {
@@ -78,17 +84,33 @@ struct NewsCardView: View {
             }.compositingGroup()
                 .shadow(radius: 10)
         }
+        .overlay(Group{
+            ZStack{
+                Button(action:{
+                    likesViewModel.saveOrDeleteLike(article: Article(author: article.author, title: article.title, description: article.descrip, url: article.url, urlToImage: article.urlToImage, publishedAt: article.publishedAt, content: article.content))
+                }){
+                    
+                    imageToDisplay.renderingMode(.template)
+                        .foregroundColor(.white)
+                }.padding(.trailing, 20)
+                    .padding(.top, 20)
+                    .frame(width: 10, height: 10)
+            }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
+        })
         
     }
 }
 
 
-
-struct RoundBackground: View{
+struct ImagePlaceholder: View {
+    
     var body: some View {
-        RoundedRectangle(cornerRadius: Consts.cornerRadius, style: .continuous)
-            .fill(Color(UIColor.init(rgb:  0xf9f9f9)))
-            .frame(maxWidth: .infinity, maxHeight: Consts.cardHeight)
-        
+        let imageHeight: CGFloat = 116
+        Image("placeholder")
+            .resizable()
+            .aspectRatio(contentMode: .fill)
+            .frame(maxWidth: .infinity, maxHeight: imageHeight)
+            .clipped()
     }
 }
+

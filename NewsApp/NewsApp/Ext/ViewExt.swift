@@ -33,3 +33,9 @@ extension View {
         .navigationViewStyle(.stack)
     }
 }
+
+extension View {
+  func navigationBarColor(backgroundColor: UIColor, tintColor: UIColor) -> some View {
+    self.modifier(NavigationBarColor(backgroundColor: backgroundColor, tintColor: tintColor))
+  }
+}

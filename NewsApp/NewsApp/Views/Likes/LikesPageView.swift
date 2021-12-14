@@ -14,9 +14,3 @@ struct LikesPageView: View {
         LikesListView()
     }
 }
-//
-//struct LikesPageView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        LikesPageView()
-//    }
-//}

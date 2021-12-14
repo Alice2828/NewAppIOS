@@ -12,4 +12,8 @@ struct Consts{
     static let cardHeight: CGFloat = 250
 
     static let cornerRadius: CGFloat = 5
+    
+    static let cardAndImageWidth: CGFloat = 170
+    
+    static let imageHeight: CGFloat = 150
 }

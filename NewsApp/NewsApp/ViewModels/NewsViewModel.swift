@@ -31,44 +31,52 @@ class NewsViewModel: ObservableObject {
     
     func getNewsSearchableDefault(){
         searchState = .loading
-        newsRepo.getNewsSearchable(qInTitle: "bitcoin"){ [weak self] result in
-            switch result {
-            case .success(let apiPost):
-                DispatchQueue.main.async {
-                    self?.searchState = .loaded
-                    self?.searchedNews = apiPost.articles ?? [Article]()
+        DispatchQueue.global(qos: .background).async { [self] in
+            newsRepo.getNewsSearchable(qInTitle: "bitcoin"){ [weak self] result in
+                switch result {
+                case .success(let apiPost):
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 4.0, execute:  {
+                        self?.searchState = .loaded
+                        self?.searchedNews = apiPost.articles ?? [Article]()
+                    })
+                case .failure(let error):
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 4.0, execute:  { self?.searchState = .failed(error)})
                 }
-            case .failure(let error):
-                DispatchQueue.main.async { self?.searchState = .failed(error)}
             }
         }
     }
     
     func getNewsSearchable(){
         searchState = .loading
-        newsRepo.getNewsSearchable(qInTitle: searchedText){ [weak self] result in
-            switch result {
-            case .success(let apiPost):
-                DispatchQueue.main.async {
-                    self?.searchState = .loaded
-                    self?.searchedNews = apiPost.articles ?? [Article]()
+        DispatchQueue.global(qos: .background).async { [self] in
+            newsRepo.getNewsSearchable(qInTitle: searchedText){ [weak self] result in
+                switch result {
+                case .success(let apiPost):
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 4.0, execute:  {
+                        self?.searchState = .loaded
+                        self?.searchedNews = apiPost.articles ?? [Article]()
+                    })
+                case .failure(let error):
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 4.0, execute:  { self?.searchState = .failed(error)})
                 }
-            case .failure(let error):
-                DispatchQueue.main.async { self?.searchState = .failed(error)}
             }
         }
     }
     
     func getTop(){
-        topState = .loading
-        newsRepo.getTop{ [weak self] result in
-            switch result {
-            case .success(let apiPost):
-                DispatchQueue.main.async {
-                    self?.topState = .loaded
-                    self?.topNews = apiPost.articles ?? [Article]()}
-            case .failure(let error):
-                DispatchQueue.main.async { self?.topState = .failed(error)}
+        self.topState = .loading
+        DispatchQueue.global(qos: .background).async { [self] in
+            newsRepo.getTop{ [weak self] result in
+                switch result {
+                case .success(let apiPost):
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 4.0, execute:  {
+                        self?.topState = .loaded
+                        self?.topNews = apiPost.articles ?? [Article]()
+                    })
+                    
+                case .failure(let error):
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 4.0, execute:  { self?.topState = .failed(error)})
+                }
             }
         }
     }
