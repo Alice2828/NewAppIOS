@@ -12,11 +12,11 @@ typealias MethodToDismiss = ()->Void
 
 struct DetailsPageView: View {
     @State var article: Article
-    @ObservedObject var viewModel: NewsViewModel
+    @ObservedObject var newsViewModel: NewsViewModel
     @Environment(\.presentationMode) var presentationMode
     var body: some View {
         VStack{
-            ArticleDetail(article: $article, viewModel: viewModel).padding()
+            ArticleDetail(article: $article, newsViewModel: newsViewModel).padding()
             //            CallButton(action: goBack).padding()
             //            DeleteButton(person: $person, action: goBack, contactsViewModel: contactsViewModel).padding()
             Spacer()
@@ -32,16 +32,16 @@ struct DetailsPageView: View {
 
 struct ArticleDetail: View{
     @Binding var article: Article
-    @ObservedObject var viewModel: NewsViewModel
+    @ObservedObject var newsViewModel: NewsViewModel
     @Environment(\.managedObjectContext) private var context
-    
-    var imageToDisplay: Image {
-        if viewModel.likesIds.first(where: {$0 == (article.id )}) != nil {
-            return Image(systemName: "heart.fill")
-        } else {
-            return Image(systemName: "heart")
-        }
-    }
+//
+//    var imageToDisplay: Image {
+//        if viewModel.likesObservable.first(where: {$0.articleId == article.id}) != nil {
+//            return Image(systemName: "heart.fill")
+//        } else {
+//            return Image(systemName: "heart")
+//        }
+//    }
     
     var body: some View {
         HStack {
@@ -54,10 +54,10 @@ struct ArticleDetail: View{
                 Text(article.description ?? "").multilineTextAlignment(.leading).font(.system(size: 20,  weight: .heavy))
                 Text(article.url ?? "").multilineTextAlignment(.leading)
                 Button(action:{
-                    viewModel.saveOrDeleteLike(id: article.id)
+                    //viewModel.saveOrDeleteLike(article: article)
                 }){
                     
-                    imageToDisplay.renderingMode(.original)
+                   // imageToDisplay.renderingMode(.original)
                 }.padding(.trailing, 20)
                     .padding(.top, 20)
                     .frame(width: 10, height: 10)

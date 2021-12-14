@@ -8,16 +8,8 @@
 import Foundation
 
 struct Article: Identifiable, Equatable, Hashable, Codable{
-//    var id: String? {
-//        didSet {
-//            if id == nil
-//            {
-//                id = randomString(length: 5)
-//                print("ID LALA LOL \(id)")
-//            }
-//        }
-//    }
     var id: String = randomString(length: 5)
+    var articleId: String = randomString(length: 5)
     
     var author: String?
     var title: String?

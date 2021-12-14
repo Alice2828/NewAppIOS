@@ -15,16 +15,6 @@ class NewsViewModel: ObservableObject {
     @Published var topNews: [Article] = [Article]()
     @Published var searchedNews: [Article] = [Article]()
     @Published var searchedText: String = "bitcoin"
-    var context: NSManagedObjectContext?
-    //    @FetchRequest(
-    //        entity: LikedArticle.entity(),
-    //        sortDescriptors: [
-    //            NSSortDescriptor(keyPath: \LikedArticle.articleId, ascending: true)
-    //        ]
-    //    )
-    //    var likes: FetchedResults<LikedArticle>
-    @FetchRequest private var likes: FetchedResults<LikedArticle>
-    @Published var likesIds: [String?] = [String?]()
     
     enum State {
         case idle
@@ -37,19 +27,6 @@ class NewsViewModel: ObservableObject {
     
     init(newsRepo: NewsRepositoryProtocol = NewsRepository()) {
         self.newsRepo = newsRepo
-        
-        let fetchRequest: NSFetchRequest<LikedArticle> = LikedArticle.fetchRequest()
-        fetchRequest.sortDescriptors = [NSSortDescriptor(keyPath: \LikedArticle.articleId, ascending: true)]
-        //fetchRequest.predicate = NSPredicate(value: true)
-        
-        do {
-            self._likes = FetchRequest(fetchRequest: fetchRequest)
-            let likesFromCore = try context?.fetch(fetchRequest)
-            print("HIHI \(likesFromCore)")
-            self.likesIds = likesFromCore?.map({$0.articleId}) ?? [String]()
-        } catch {
-            fatalError("Uh, fetch problem...")
-        }
     }
     
     func getNewsSearchableDefault(){
@@ -94,42 +71,5 @@ class NewsViewModel: ObservableObject {
                 DispatchQueue.main.async { self?.topState = .failed(error)}
             }
         }
-    }
-    
-    func saveOrDeleteLike(id: String){
-        print("ID LALA \(id)")
-        if (likes.contains(where: {$0.articleId == id}) || likesIds.contains(where: {$0 == id})){
-            if let like = likes.first(where: {$0.articleId == id}){
-                context?.delete(like)
-            }
-            context?.perform{ [self] in
-                do{
-                    try context?.save()
-                    if let index = self.likesIds.firstIndex(of: id){
-                        self.likesIds.remove(at: index)
-                        print("success")
-                    }
-                }
-                catch{
-                    print(error.localizedDescription)
-                }
-            }
-        }
-        else{
-            let entity = LikedArticle(context: context!)
-            entity.articleId = id
-            entity.userName = Auth.auth().currentUser?.email
-            context?.perform{ [self] in
-                do{
-                    try context?.save()
-                    self.likesIds.append(id)
-                    print("success")
-                }
-                catch{
-                    print(error.localizedDescription)
-                }
-            }
-        }
-        
     }
 }

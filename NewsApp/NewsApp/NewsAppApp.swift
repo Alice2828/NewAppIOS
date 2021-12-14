@@ -15,6 +15,7 @@ struct NewsAppApp: App {
     let persistenceController = PersistenceController.shared
     let context = PersistentCloudKitContainer.persistentContainer.viewContext
     @State var loggedIn: Bool = false
+    var clear = false
     // 1
     @FetchRequest(
         // 2
@@ -38,37 +39,39 @@ struct NewsAppApp: App {
 //        print("HIHI 2 \(Auth.auth().currentUser!)")
 //        print("HIHI 3 \(Auth.auth().currentUser!.isEmailVerified)")
 //        print("HIHI 4 \(loggedIn)")
-//        let storeContainer = PersistentCloudKitContainer.persistentContainer.persistentStoreCoordinator
-//
-//        // Delete each existing persistent store
-//        do {for store in storeContainer.persistentStores {
-//            try storeContainer.destroyPersistentStore(
-//                at: store.url!,
-//                ofType: store.type,
-//                options: nil
-//            )
-//        }
-//        }
-//        catch{}
-//
-//        // Re-create the persistent container
-//        PersistentCloudKitContainer.persistentContainer = NSPersistentContainer(
-//            name: "LikedArticle" // the name of
-//            // a .xcdatamodeld file
-//        )
-//
-//        // Calling loadPersistentStores will re-create the
-//        // persistent stores
-//        PersistentCloudKitContainer.persistentContainer.loadPersistentStores {
-//            (store, error) in
-//            // Handle errors
-//        }
+if(clear){
+    let storeContainer = PersistentCloudKitContainer.persistentContainer.persistentStoreCoordinator
+
+        // Delete each existing persistent store
+        do {for store in storeContainer.persistentStores {
+            try storeContainer.destroyPersistentStore(
+                at: store.url!,
+                ofType: store.type,
+                options: nil
+            )
+        }
+        }
+        catch{}
+
+        // Re-create the persistent container
+        PersistentCloudKitContainer.persistentContainer = NSPersistentContainer(
+            name: "LikedArticle" // the name of
+            // a .xcdatamodeld file
+        )
+
+        // Calling loadPersistentStores will re-create the
+        // persistent stores
+        PersistentCloudKitContainer.persistentContainer.loadPersistentStores {
+            (store, error) in
+            // Handle errors
+        }}
         
     }
     var body: some Scene {
         WindowGroup {
             if(loggedIn){
                 Base(loggedIn: $loggedIn).environmentObject(NewsViewModel())
+                    .environmentObject(LikesViewModel())
                     .environment(\.managedObjectContext, context)
             }
             else{

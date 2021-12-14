@@ -11,7 +11,7 @@ import CoreData
 struct LikesPageView: View {
     
     var body: some View {
-        NewsList(type: .likes)
+        LikesListView()
     }
 }
 //

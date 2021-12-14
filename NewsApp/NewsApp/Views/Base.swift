@@ -9,13 +9,14 @@ import SwiftUI
 import CoreData
 
 struct Base: View {
-    @EnvironmentObject var viewModel: NewsViewModel
+    @EnvironmentObject var newsViewModel: NewsViewModel
+    @EnvironmentObject var likesViewModel: LikesViewModel
     @Environment(\.managedObjectContext) private var context
     
     @Binding var loggedIn: Bool
     var body: some View {
         BottomNavBar(loggedIn: $loggedIn).onAppear{
-            self.viewModel.context = context
+            self.likesViewModel.context = context
         }
     }
 }

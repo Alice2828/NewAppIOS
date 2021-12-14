@@ -7,8 +7,6 @@
 
 import Foundation
 
-typealias NetworkResult<T: Decodable> = Observable<ResultWithError<T>?>
-
 typealias NetworkRouterCompletion<T: Decodable> = (_ result: ResultWithError<T>) -> ()
 
 protocol NetworkRouter: AnyObject {

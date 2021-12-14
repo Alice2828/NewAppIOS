@@ -5,6 +5,13 @@
     </entity>
     <entity name="LikedArticle" representedClassName="LikedArticle" syncable="YES" codeGenerationType="class">
         <attribute name="articleId" optional="YES" attributeType="String"/>
+        <attribute name="author" optional="YES" attributeType="String"/>
+        <attribute name="content" optional="YES" attributeType="String"/>
+        <attribute name="descrip" optional="YES" attributeType="String"/>
+        <attribute name="publishedAt" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <attribute name="url" optional="YES" attributeType="String"/>
+        <attribute name="urlToImage" optional="YES" attributeType="String"/>
         <attribute name="userName" optional="YES" attributeType="String"/>
     </entity>
     <entity name="MyUser" representedClassName="MyUser" syncable="YES" codeGenerationType="class">
@@ -14,6 +21,6 @@
     <elements>
         <element name="Item" positionX="-63" positionY="-18" width="128" height="44"/>
         <element name="MyUser" positionX="-54" positionY="9" width="128" height="59"/>
-        <element name="LikedArticle" positionX="-36" positionY="27" width="128" height="59"/>
+        <element name="LikedArticle" positionX="-36" positionY="27" width="128" height="164"/>
     </elements>
 </model>

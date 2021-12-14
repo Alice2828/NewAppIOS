@@ -11,7 +11,6 @@ import CoreData
 enum TypeList{
     case top
     case search
-    case likes
 }
 
 struct NewsList: View {
@@ -34,7 +33,7 @@ struct NewsList: View {
                     List {
                         ForEach(viewModel.topNews, id: \.self) { article in
                             
-                            LikedArticleRow(article: article)
+                            NewsArticleRow(article: article)
                         }
                     }
                     
@@ -66,27 +65,11 @@ struct NewsList: View {
                         ZStack{
                             List {
                                 ForEach(viewModel.searchedNews, id: \.self) { article in
-                                    LikedArticleRow(article: article)
+                                    NewsArticleRow(article: article)
                                 }
                             }
                         }
                     }
-                }
-            }
-        case .likes:
-            
-            ZStack{
-                List {
-                    ForEach(viewModel.likesIds, id: \.self) { articleId in
-                        if let article = viewModel.topNews.first(where:{$0.id == articleId}){
-                            LikedArticleRow(article: article)
-                        }
-                        else
-                            if let article = viewModel.searchedNews.first(where:{$0.id == articleId}){
-                                LikedArticleRow(article: article)
-                            }
-                    }
-                    
                 }
             }
         }
@@ -94,8 +77,17 @@ struct NewsList: View {
     }
 }
 
-struct LikedArticleRow: View {
+struct NewsArticleRow: View {
     @State var article: Article
+    
+    var body: some View {
+        NewsCardView(article: $article)
+            .onAppear(perform: {print("ID LALA LA \(article.id)")})
+    }
+}
+
+struct LikedArticleRow: View {
+    @State var article: LikedArticle
     
     var body: some View {
         LikedNewsCardView(article: $article)
