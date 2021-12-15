@@ -12,91 +12,87 @@ typealias MethodToDismiss = ()->Void
 
 struct DetailsPageView: View {
     @State var article: Article
+    @ObservedObject var imageLoader: ImageLoader
     
     @Environment(\.presentationMode) var presentationMode
     var body: some View {
         VStack{
-            ArticleDetail(article: $article).padding()
-            //            CallButton(action: goBack).padding()
-            //            DeleteButton(person: $person, action: goBack, contactsViewModel: contactsViewModel).padding()
+            ArticleDetail(article: $article, imageLoader: imageLoader).padding()
             Spacer()
         }
         .navigationTitle(article.title ?? "News Details")
         .navigationBarTitleDisplayMode(.inline)
     }
-    
-    //    private func goBack() {
-    //        presentationMode.wrappedValue.dismiss()
-    //    }
 }
 
 struct ArticleDetail: View{
     @Binding var article: Article
-    //@EnvironmentObject var newsViewModel: NewsViewModel
+    @ObservedObject var imageLoader: ImageLoader
     @EnvironmentObject var likesViewModel: LikesViewModel
-    @Environment(\.managedObjectContext) private var context
-
+    
     var imageToDisplay: Image {
         if likesViewModel.likesObservable.first(where: {$0.title == article.title}) != nil {
+            print("HIHIHI \(likesViewModel.likesObservable)")
             return Image(systemName: "heart.fill")
         } else {
             return Image(systemName: "heart")
         }
     }
+    var likeBtn: some View {
+        LikeButton(action: likesViewModel.saveOrDeleteLike, article: article, imageToDisplay: imageToDisplay)
+    }
+    var shareBtn: some View {
+        ShareButton(action: likesViewModel.shareArticle, article: article)
+    }
     
     var body: some View {
-        HStack {
-            //            article.image
-            //                .resizable()
-            //                .frame(width: 80, height: 80)
-            //                .padding()
-            
-            VStack(alignment: .leading, spacing: 10, content: {
-                Text(article.description ?? "").multilineTextAlignment(.leading).font(.system(size: 20,  weight: .heavy))
-                Text(article.url ?? "").multilineTextAlignment(.leading)
-                Button(action:{
-                    likesViewModel.saveOrDeleteLike(article: article)
-                }){
+            VStack {
+                ZStack{
+                    if let data = self.imageLoader.downloadedData{
+                        if let uiImage = UIImage(data: data){
+                            Image(uiImage: uiImage)
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(maxWidth: .infinity)
+                        }
+                        else{
+                            ImagePlaceholder()
+                        }
+                    }
+                    else{
+                        ImagePlaceholder()
+                    }
                     
-                    imageToDisplay.renderingMode(.original)
-                }.padding(.trailing, 20)
-                    .padding(.top, 20)
-                    .frame(width: 10, height: 10)
-            })
-            Spacer()
-        }
+                }.overlay(
+                    VStack{
+                        HStack {
+                            Spacer()
+                            HStack(alignment: .center, spacing: 10){
+                                shareBtn
+                                likeBtn
+                            }
+                            .background(Color(UIColor.init(rgb:  0x81d5fa)))
+                            .clipShape(Capsule())
+                        }
+                        .padding(.top, 5)
+                        .padding(.trailing, 5)
+                        Spacer()
+                    }
+                )
+                    .padding(.bottom, 5)
+                    .clipShape(RoundedRectangle(cornerRadius: Consts.cornerRadius, style: .continuous))
+                
+                //content
+                
+                VStack(alignment: .leading, spacing: 10, content: {
+                    if let title = article.title{
+                        Text(title).multilineTextAlignment(.leading).font(.system(size: 20,  weight: .heavy))
+                    }
+                    if let publishedAt = article.publishedAt{
+                        CapsuleText(text: publishedAt)
+                    }
+                    WebView(type: .public, url: article.url)
+                })
+            }
     }
 }
-//
-//struct CallButton: View{
-//    let action: MethodToDismiss
-//    var body: some View {
-//        Button("Call", action: action)
-//            .font(.headline)
-//            .foregroundColor(.white)
-//            .frame(width: 220, height: 60)
-//            .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
-//            .background(Color.green.opacity(0.7))
-//            .cornerRadius(15.0)
-//    }
-//}
-//
-//struct DeleteButton: View{
-//    @Binding var person: Person
-//    let action: MethodToDismiss
-//    @ObservedObject var contactsViewModel: ContactsViewModel
-//    
-//    var body: some View {
-//        Button("Delete", action: {
-//            let index = contactsViewModel.getIndexOf(person: person)
-//            contactsViewModel.removeContact(index: index)
-//            self.action()
-//        })
-//        .font(.headline)
-//        .foregroundColor(.white)
-//        .frame(width: 220, height: 60)
-//        .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
-//        .background(Color.red.opacity(0.7))
-//        .cornerRadius(15.0)
-//    }
-//}

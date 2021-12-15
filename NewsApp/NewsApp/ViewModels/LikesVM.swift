@@ -28,6 +28,10 @@ class LikesViewModel: ObservableObject {
         self.coreDataStore = coreDataStore
     }
     
+    func shareArticle(article: Article){
+        
+    }
+    
     func saveOrDeleteLike2(article: Article){deleteAll()}
     func saveOrDeleteLike(article: Article){
         if (likesObservable.contains(where: {$0.title == article.title})){

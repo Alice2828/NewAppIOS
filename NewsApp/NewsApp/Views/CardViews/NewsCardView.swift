@@ -16,7 +16,7 @@ struct NewsCardView: View {
     
     
     var destination: some View {
-        DetailsPageView(article: article)
+        DetailsPageView(article: article, imageLoader: imageLoader)
             .navigationBarTitle("Details")
     }
     
@@ -51,21 +51,20 @@ struct NewsCardView: View {
                             VStack(alignment: .leading){
                                 Spacer()
                                 if let author = article.author{
-                                   // ZStack{
-                                        //Capsule().fill(.white)
-                                        Text(author)
-                                            .padding()
-                                            .frame(maxWidth: .infinity, alignment: .leading)
-                                            .foregroundColor(Color(UIColor.init(rgb:  0x81d5fa)))
-                                   // }
+                                    CapsuleText(text: author)
                                 }
+                                
                                 else {EmptyView()}
                             }
-                        ).padding(.bottom, 5)
+                                .padding(.bottom, 10)
+                                .padding(.leading, 5)
+                                .padding(.trailing, 5)
+                        )
+                            .padding(.bottom, 5)
                             .clipShape(RoundedRectangle(cornerRadius: Consts.cornerRadius, style: .continuous))
                         
                         //text part
-                        CardTextDescription(article: $article)
+                        CardTextDescription(article: article)
                             .padding(.horizontal,12)
                             .padding(.bottom,11)
                         
@@ -78,15 +77,16 @@ struct NewsCardView: View {
                         imageLoader.downloadImage(url: urlToImage)
                     }
                 })
-            }.compositingGroup()
-                .shadow(radius: 10)
+            }
+            .compositingGroup()
+            .shadow(radius: 10)
         }
         
     }
 }
 
 struct CardTextDescription: View{
-    @Binding var article: Article
+    var article: Article
     
     var body: some View{
         VStack(alignment: .leading, spacing: 5) {
@@ -114,5 +114,20 @@ struct RoundBackground: View{
         RoundedRectangle(cornerRadius: Consts.cornerRadius, style: .continuous)
             .fill(Color(UIColor.init(rgb:  0xf9f9f9)))
             .frame(maxWidth: .infinity, maxHeight: Consts.cardHeight)
+    }
+}
+
+struct CapsuleText: View{
+    var text: String
+    
+    var body: some View {
+        Text(text)
+            .padding(.leading, 10)
+            .padding(.trailing, 10)
+            .fixedSize(horizontal: false, vertical: true)
+            .background(Color(UIColor.init(rgb:  0x81d5fa)))
+            .clipShape(Capsule())
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .foregroundColor(.white)
     }
 }
