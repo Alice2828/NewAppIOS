@@ -13,15 +13,47 @@ typealias MethodToDismiss = ()->Void
 struct DetailsPageView: View {
     @State var article: Article
     @ObservedObject var imageLoader: ImageLoader
-    
+    @State var initialOffset: CGFloat?
+    @State var offset: CGFloat?
     @Environment(\.presentationMode) var presentationMode
     var body: some View {
         VStack{
-            ArticleDetail(article: $article, imageLoader: imageLoader).padding()
-            Spacer()
+            TopView(imageLoader: imageLoader, offset: self.$offset,
+                    initialOffset: self.$initialOffset, actionBack: goBack, article: article)
+            
+            ScrollView(.vertical, showsIndicators: false) {
+                GeometryReader { geometry in
+                    Color.clear.preference(key: OffsetKey.self, value: geometry.frame(in: .global).minY)
+                        .frame(height: 0)
+                }
+                ArticleDetail(article: $article, imageLoader: imageLoader, initialOffset: $initialOffset, offset: $offset).padding()
+                Spacer()
+            }
         }
-        .navigationTitle(article.title ?? "News Details")
-        .navigationBarTitleDisplayMode(.inline)
+        .onPreferenceChange(OffsetKey.self) {
+            if self.initialOffset == nil || self.initialOffset == 0 {
+                self.initialOffset = $0
+            }
+            self.offset = $0
+        }
+    }
+    
+    private func goBack() {
+        presentationMode.wrappedValue.dismiss()
+    }
+    
+    
+    private func scrollOffset(_ geometry: GeometryProxy) -> CGFloat {
+        let scrollOffset = geometry.frame(in: .global).minY
+        return scrollOffset
+    }
+}
+
+struct OffsetKey: PreferenceKey {
+    static let defaultValue: CGFloat? = nil
+    static func reduce(value: inout CGFloat?,
+                       nextValue: () -> CGFloat?) {
+        value = value ?? nextValue()
     }
 }
 
@@ -29,6 +61,11 @@ struct ArticleDetail: View{
     @Binding var article: Article
     @ObservedObject var imageLoader: ImageLoader
     @EnvironmentObject var likesViewModel: LikesViewModel
+    @Binding var initialOffset: CGFloat?
+    @Binding var offset: CGFloat?
+    var color: Color = Color("navTitle1")
+    @State private var webViewHeight: CGFloat = .zero
+    @State var isLoaderVisible = true
     
     var imageToDisplay: Image {
         if likesViewModel.likesObservable.first(where: {$0.title == article.title}) != nil {
@@ -38,61 +75,16 @@ struct ArticleDetail: View{
             return Image(systemName: "heart")
         }
     }
-    var likeBtn: some View {
-        LikeButton(action: likesViewModel.saveOrDeleteLike, article: article, imageToDisplay: imageToDisplay)
-    }
-    var shareBtn: some View {
-        ShareButton(action: likesViewModel.shareArticle, article: article)
-    }
     
     var body: some View {
-            VStack {
-                ZStack{
-                    if let data = self.imageLoader.downloadedData{
-                        if let uiImage = UIImage(data: data){
-                            Image(uiImage: uiImage)
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(maxWidth: .infinity)
-                        }
-                        else{
-                            ImagePlaceholder()
-                        }
-                    }
-                    else{
-                        ImagePlaceholder()
-                    }
-                    
-                }.overlay(
-                    VStack{
-                        HStack {
-                            Spacer()
-                            HStack(alignment: .center, spacing: 10){
-                                shareBtn
-                                likeBtn
-                            }
-                            .background(Color(UIColor.init(rgb:  0x81d5fa)))
-                            .clipShape(Capsule())
-                        }
-                        .padding(.top, 5)
-                        .padding(.trailing, 5)
-                        Spacer()
-                    }
-                )
-                    .padding(.bottom, 5)
-                    .clipShape(RoundedRectangle(cornerRadius: Consts.cornerRadius, style: .continuous))
-                
-                //content
-                
-                VStack(alignment: .leading, spacing: 10, content: {
-                    if let title = article.title{
-                        Text(title).multilineTextAlignment(.leading).font(.system(size: 20,  weight: .heavy))
-                    }
-                    if let publishedAt = article.publishedAt{
-                        CapsuleText(text: publishedAt)
-                    }
-                    WebView(type: .public, url: article.url)
-                })
+        
+        VStack(alignment: .center, spacing: 10, content: {
+            if isLoaderVisible {
+                LoaderView()
             }
+            WebView(type: .public, url: article.url, dynamicHeight: $webViewHeight, isLoaderVisible: $isLoaderVisible)
+                .frame(height: webViewHeight)
+        })
     }
+    
 }

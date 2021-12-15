@@ -26,7 +26,7 @@ struct LikedNewsCardView: View {
     }
     
     var destination: some View {
-        DetailsPageView(article: articleLiked, imageLoader: imageLoader)
+        DetailsPageView(article: articleLiked, imageLoader: imageLoader) .navigationBarHidden(true)
     }
     
     var likeBtn: some View {

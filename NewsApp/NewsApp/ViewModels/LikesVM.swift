@@ -107,11 +107,10 @@ class LikesViewModel: ObservableObject {
             .publicher(delete: request)
             .sink { completion in
                 if case .failure(let error) = completion {
-                    //message = error.localizedDescription
+                    print("\(error.localizedDescription)")
                 }
             } receiveValue: { _ in
-                //                   message = "Deleting entities succeeded"
-                //                   number_of_persons = 0
+                print("all deleted")
             }
             .store(in: &bag)
         

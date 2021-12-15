@@ -17,7 +17,7 @@ struct NewsCardView: View {
     
     var destination: some View {
         DetailsPageView(article: article, imageLoader: imageLoader)
-            .navigationBarTitle("Details")
+            .navigationBarHidden(true)
     }
     
     var body: some View {
