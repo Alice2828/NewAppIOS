@@ -59,6 +59,8 @@ struct BtnLogin: View {
     @Binding var password: String
     @State private var showingAlert = false
     
+    @EnvironmentObject var usersManager: UsersManager
+    
     var body: some View {
         Button("LOGIN"){login()}
         .font(.headline)
@@ -79,6 +81,7 @@ struct BtnLogin: View {
                 if error == nil {
                     if Auth.auth().currentUser!.isEmailVerified{
                         loggedIn = true
+                        usersManager.fetch(username: email)
                         print("success")
                     }
                     else {
@@ -155,6 +158,7 @@ struct LoginView: View {
     @State var password: String = ""
     @State var goToRegister: Bool = false
     @Binding var loggedIn: Bool
+    @EnvironmentObject var usersManager: UsersManager
     
     var body: some View{
         GeometryReader { geometry in

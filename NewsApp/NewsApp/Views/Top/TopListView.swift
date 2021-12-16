@@ -17,7 +17,7 @@ struct TopListView: View {
             
         case .idle:
             Color.clear.onAppear{
-                newsViewModel.getTop()
+               // newsViewModel.getTop()
             }
             
         case .loading:

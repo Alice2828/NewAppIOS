@@ -11,8 +11,22 @@ import CoreData
 
 struct ProfilePageView: View {
     @Binding var loggedIn: Bool
+    @EnvironmentObject var usersManager: UsersManager
+    
     var body: some View {
-        Button("Exit"){logout()}
+        VStack{
+            if let currentUsr = usersManager.currentUser{
+                if let img = currentUsr.image{
+                    ProfileHeader(image: UIImage(data: img) ?? UIImage(imageLiteralResourceName: "placeholder"))
+                }
+                else{
+                    ProfileHeader(image: UIImage(imageLiteralResourceName: "placeholder"))
+                }
+            }
+            Button("Exit"){logout()}.padding()
+            Spacer()
+        }
+        .padding(.bottom, 30)
     }
     
     func logout(){

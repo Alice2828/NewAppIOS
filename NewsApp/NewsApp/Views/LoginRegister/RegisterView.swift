@@ -10,6 +10,7 @@ import SwiftUI
 import FirebaseAuth
 
 struct RegisterText: View {
+    
     var body: some View {
         Text("Register")
             .font(.system(size: 20,  weight: .heavy))
@@ -75,6 +76,7 @@ struct BtnRegister: View {
     @Binding var email: String
     @State private var showingAlert = false
     @Binding var showingAlertSuccess: Bool
+    @EnvironmentObject var usersManager: UsersManager
     
     var body: some View {
         Button("Register"){register()}
@@ -100,6 +102,7 @@ struct BtnRegister: View {
                     print(error?.localizedDescription ?? "")
                 } else {
                     showingAlertSuccess = true
+                    usersManager.saveUser(username: email, name: name)
                     print("success")
                 }
             }

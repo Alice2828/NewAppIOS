@@ -16,6 +16,7 @@ struct DetailsPageView: View {
     @State var initialOffset: CGFloat?
     @State var offset: CGFloat?
     @Environment(\.presentationMode) var presentationMode
+    
     var body: some View {
         VStack{
             TopView(imageLoader: imageLoader, offset: self.$offset,
@@ -26,7 +27,7 @@ struct DetailsPageView: View {
                     Color.clear.preference(key: OffsetKey.self, value: geometry.frame(in: .global).minY)
                         .frame(height: 0)
                 }
-                ArticleDetail(article: $article, imageLoader: imageLoader, initialOffset: $initialOffset, offset: $offset).padding()
+                ArticleDetail(article: $article, initialOffset: $initialOffset, offset: $offset).padding()
                 Spacer()
             }
         }
@@ -59,31 +60,19 @@ struct OffsetKey: PreferenceKey {
 
 struct ArticleDetail: View{
     @Binding var article: Article
-    @ObservedObject var imageLoader: ImageLoader
-    @EnvironmentObject var likesViewModel: LikesViewModel
     @Binding var initialOffset: CGFloat?
     @Binding var offset: CGFloat?
-    var color: Color = Color("navTitle1")
     @State private var webViewHeight: CGFloat = .zero
     @State var isLoaderVisible = true
-    
-    var imageToDisplay: Image {
-        if likesViewModel.likesObservable.first(where: {$0.title == article.title}) != nil {
-            print("HIHIHI \(likesViewModel.likesObservable)")
-            return Image(systemName: "heart.fill")
-        } else {
-            return Image(systemName: "heart")
-        }
-    }
     
     var body: some View {
         
         VStack(alignment: .center, spacing: 10, content: {
-            if isLoaderVisible {
-                LoaderView()
-            }
-            WebView(type: .public, url: article.url, dynamicHeight: $webViewHeight, isLoaderVisible: $isLoaderVisible)
-                .frame(height: webViewHeight)
+//            if isLoaderVisible {
+//                LoaderView()
+//            }
+//            WebView(type: .public, url: article.url, dynamicHeight: $webViewHeight, isLoaderVisible: $isLoaderVisible)
+//                .frame(height: webViewHeight)
         })
     }
     

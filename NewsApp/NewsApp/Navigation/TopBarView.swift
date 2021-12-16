@@ -14,6 +14,7 @@ struct TopView: View {
     let actionBack: () -> ()
     var article: Article
     @EnvironmentObject var likesViewModel: LikesViewModel
+    
     var imageToDisplay: Image {
         if likesViewModel.likesObservable.first(where: {$0.title == article.title}) != nil {
             print("HIHIHI \(likesViewModel.likesObservable)")
@@ -22,6 +23,7 @@ struct TopView: View {
             return Image(systemName: "heart")
         }
     }
+    @State var noUrl: Bool = false
     
     
     var body: some View {
@@ -34,9 +36,16 @@ struct TopView: View {
                 }
                 Spacer()
                 Button(action: {
-                    likesViewModel.shareArticle(article: article)
+                    if let url = article.url{
+                        actionSheet(url: url)
+                    }
+                    else {
+                        noUrl = true
+                    }
                 }) {
                     ButtonImageInCircle(image:  Image(systemName: "square.and.arrow.up"))
+                } .alert(isPresented: $noUrl) {
+                    Alert(title: Text("There is no url to share"), message: Text("Try another article"), dismissButton: .cancel())
                 }
                 Button(action: {
                     likesViewModel.saveOrDeleteLike(article: article)
@@ -53,6 +62,11 @@ struct TopView: View {
         }
     }
     
+    func actionSheet(url: String) {
+            guard let data = URL(string: url) else { return }
+            let av = UIActivityViewController(activityItems: [data], applicationActivities: nil)
+            UIApplication.shared.windows.first?.rootViewController?.present(av, animated: true, completion: nil)
+        }
     
     private func showTitleView() -> Bool {
         guard let initialOffset = initialOffset,

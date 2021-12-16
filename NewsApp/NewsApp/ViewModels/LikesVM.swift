@@ -28,10 +28,6 @@ class LikesViewModel: ObservableObject {
         self.coreDataStore = coreDataStore
     }
     
-    func shareArticle(article: Article){
-        
-    }
-    
     func saveOrDeleteLike2(article: Article){deleteAll()}
     func saveOrDeleteLike(article: Article){
         if (likesObservable.contains(where: {$0.title == article.title})){
@@ -66,9 +62,10 @@ class LikesViewModel: ObservableObject {
             }
             .store(in: &bag)
     }
-    
+     
     func fetch() {
         let request = NSFetchRequest<LikedArticle>(entityName: LikedArticle.entityName)
+        request.predicate = NSPredicate(format: "userName LIKE[cd] %@", Auth.auth().currentUser?.email as! CVarArg)
         
         coreDataStore
             .publicher(fetch: request)

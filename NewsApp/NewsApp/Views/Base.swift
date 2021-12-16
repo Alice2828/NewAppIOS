@@ -11,6 +11,8 @@ import CoreData
 struct Base: View {
     @EnvironmentObject var newsViewModel: NewsViewModel
     @EnvironmentObject var likesViewModel: LikesViewModel
+    @EnvironmentObject var coronaVm: CoronaVM
+    @EnvironmentObject var usersManager: UsersManager
     @StateObject var viewRouter: ViewRouter
     @Binding var loggedIn: Bool
     
@@ -33,6 +35,7 @@ struct BasicView: View {
     @Binding var loggedIn: Bool
     @EnvironmentObject var newsViewModel: NewsViewModel
     @EnvironmentObject var likesViewModel: LikesViewModel
+    @EnvironmentObject var usersManager: UsersManager
     
     var body: some View {
         VStack {
@@ -52,12 +55,11 @@ struct BasicView: View {
                 }
                 .navigationViewStyle(StackNavigationViewStyle()).navigationBarColor(backgroundColor: .systemPink, tintColor: .white)
             case .profile:
-                NavigationView{
-                    ProfilePageView(loggedIn: $loggedIn) .navigationTitle("My Profile")
-                }
-                .navigationViewStyle(StackNavigationViewStyle())
-                .navigationBarColor(backgroundColor: .systemBlue, tintColor: .white)
+                ProfilePageView(loggedIn: $loggedIn)
+            case .corona:
+                CoronaPageView()
             }
+            
             Spacer()
         }
     }

@@ -17,5 +17,6 @@ class ViewRouter: ObservableObject {
          case search
          case liked
          case profile
+        case corona
      }
 }

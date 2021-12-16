@@ -19,7 +19,7 @@ struct BottomNavBar: View {
             
             TabBarIcon(width: geometry.size.width/5, height: geometry.size.height/28, systemIconName: "heart", viewRouter: viewRouter, assignedPage: .liked)
             
-            RoundTabBarIcon(width: geometry.size.width/7, height: geometry.size.width/7, systemIconName: "plus.circle.fill", tabName: "add").offset(y: -geometry.size.height/8/2)
+            RoundTabBarIcon(width: geometry.size.width/7, height: geometry.size.width/7, systemIconName: "plus.circle.fill", tabName: "add", viewRouter: viewRouter, assignedPage: .corona).offset(y: -geometry.size.height/8/2)
             
             TabBarIcon(width: geometry.size.width/5, height: geometry.size.height/28, systemIconName: "magnifyingglass", viewRouter: viewRouter, assignedPage: .search)
             
@@ -58,6 +58,8 @@ struct TabBarIcon: View {
 struct RoundTabBarIcon:View{
     let width, height: CGFloat
     let systemIconName, tabName: String
+    @ObservedObject var viewRouter: ViewRouter
+    let assignedPage: ViewRouter.Page
     
     var body: some View{
         ZStack {
@@ -70,6 +72,8 @@ struct RoundTabBarIcon:View{
                 .aspectRatio(contentMode: .fit)
                 .frame(width: width-6 , height: width-6)
                 .foregroundColor(.blue)
+        }.onTapGesture {
+            viewRouter.currentPage = assignedPage
         }
     }
 }

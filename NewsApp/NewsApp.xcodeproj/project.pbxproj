@@ -37,6 +37,15 @@
 		F02601382769F1AD00B9B62C /* TopBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02601372769F1AD00B9B62C /* TopBarView.swift */; };
 		F026013A2769F54F00B9B62C /* ColorsAsset.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F02601392769F54F00B9B62C /* ColorsAsset.xcassets */; };
 		F026013C2769FB7400B9B62C /* LoaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F026013B2769FB7400B9B62C /* LoaderView.swift */; };
+		F026013E276A44A500B9B62C /* CoronaVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = F026013D276A44A500B9B62C /* CoronaVM.swift */; };
+		F0260140276A452C00B9B62C /* CoronaRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F026013F276A452C00B9B62C /* CoronaRepository.swift */; };
+		F0260142276A45AE00B9B62C /* CoronaModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0260141276A45AE00B9B62C /* CoronaModels.swift */; };
+		F0260144276A473700B9B62C /* CoronaAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0260143276A473700B9B62C /* CoronaAPI.swift */; };
+		F0260147276A490800B9B62C /* CoronaPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0260146276A490800B9B62C /* CoronaPageView.swift */; };
+		F0260149276A499000B9B62C /* BarChartExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0260148276A499000B9B62C /* BarChartExt.swift */; };
+		F026014B276B173900B9B62C /* ProfileHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F026014A276B173900B9B62C /* ProfileHeader.swift */; };
+		F026014D276B191700B9B62C /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F026014C276B191700B9B62C /* ImagePicker.swift */; };
+		F026014F276B4A1800B9B62C /* UsersManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F026014E276B4A1800B9B62C /* UsersManager.swift */; };
 		F0E5694127560C5D00D59BB1 /* NewsAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E5694027560C5D00D59BB1 /* NewsAppApp.swift */; };
 		F0E5694327560C5D00D59BB1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E5694227560C5D00D59BB1 /* ContentView.swift */; };
 		F0E5694527560C5F00D59BB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F0E5694427560C5F00D59BB1 /* Assets.xcassets */; };
@@ -101,6 +110,15 @@
 		F02601372769F1AD00B9B62C /* TopBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopBarView.swift; sourceTree = "<group>"; };
 		F02601392769F54F00B9B62C /* ColorsAsset.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ColorsAsset.xcassets; sourceTree = "<group>"; };
 		F026013B2769FB7400B9B62C /* LoaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoaderView.swift; sourceTree = "<group>"; };
+		F026013D276A44A500B9B62C /* CoronaVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoronaVM.swift; sourceTree = "<group>"; };
+		F026013F276A452C00B9B62C /* CoronaRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoronaRepository.swift; sourceTree = "<group>"; };
+		F0260141276A45AE00B9B62C /* CoronaModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoronaModels.swift; sourceTree = "<group>"; };
+		F0260143276A473700B9B62C /* CoronaAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoronaAPI.swift; sourceTree = "<group>"; };
+		F0260146276A490800B9B62C /* CoronaPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoronaPageView.swift; sourceTree = "<group>"; };
+		F0260148276A499000B9B62C /* BarChartExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartExt.swift; sourceTree = "<group>"; };
+		F026014A276B173900B9B62C /* ProfileHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeader.swift; sourceTree = "<group>"; };
+		F026014C276B191700B9B62C /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		F026014E276B4A1800B9B62C /* UsersManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersManager.swift; sourceTree = "<group>"; };
 		F0E5693D27560C5D00D59BB1 /* NewsApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewsApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0E5694027560C5D00D59BB1 /* NewsAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsAppApp.swift; sourceTree = "<group>"; };
 		F0E5694227560C5D00D59BB1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -221,6 +239,7 @@
 			children = (
 				F0260109276337D400B9B62C /* Consts.swift */,
 				F026013B2769FB7400B9B62C /* LoaderView.swift */,
+				F026014E276B4A1800B9B62C /* UsersManager.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -229,6 +248,7 @@
 			isa = PBXGroup;
 			children = (
 				F0260114276620AF00B9B62C /* ProfilePageView.swift */,
+				F026014A276B173900B9B62C /* ProfileHeader.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -278,6 +298,14 @@
 				F02601332769B44700B9B62C /* ShareButton.swift */,
 			);
 			path = Buttons;
+			sourceTree = "<group>";
+		};
+		F0260145276A48F300B9B62C /* Corona */ = {
+			isa = PBXGroup;
+			children = (
+				F0260146276A490800B9B62C /* CoronaPageView.swift */,
+			);
+			path = Corona;
 			sourceTree = "<group>";
 		};
 		F0E5693427560C5D00D59BB1 = {
@@ -340,6 +368,8 @@
 				F02601112763A3A800B9B62C /* ViewExt.swift */,
 				F026012A2768D28C00B9B62C /* DispQueue.swift */,
 				F02601352769E76200B9B62C /* WebViewExt.swift */,
+				F0260148276A499000B9B62C /* BarChartExt.swift */,
+				F026014C276B191700B9B62C /* ImagePicker.swift */,
 			);
 			path = Ext;
 			sourceTree = "<group>";
@@ -349,6 +379,7 @@
 			children = (
 				F0E5696227564D8D00D59BB1 /* Article.swift */,
 				F0E5698927592EC700D59BB1 /* ApiPost.swift */,
+				F0260141276A45AE00B9B62C /* CoronaModels.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -358,6 +389,7 @@
 			children = (
 				F0E5696727564E9F00D59BB1 /* NewsViewModel.swift */,
 				F0260116276855EA00B9B62C /* LikesVM.swift */,
+				F026013D276A44A500B9B62C /* CoronaVM.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -378,6 +410,7 @@
 			isa = PBXGroup;
 			children = (
 				F0E5696D2759245500D59BB1 /* NewsApi.swift */,
+				F0260143276A473700B9B62C /* CoronaAPI.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -425,6 +458,7 @@
 			isa = PBXGroup;
 			children = (
 				F0E5698727592E5100D59BB1 /* NewsRepository.swift */,
+				F026013F276A452C00B9B62C /* CoronaRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -432,6 +466,7 @@
 		F0E5698F2759357E00D59BB1 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				F0260145276A48F300B9B62C /* Corona */,
 				F02601302769AED500B9B62C /* Buttons */,
 				F026012F27690EE500B9B62C /* CardViews */,
 				F026012C27690BBB00B9B62C /* Rows */,
@@ -568,12 +603,14 @@
 				F0E56973275926D700D59BB1 /* NetworkError.swift in Sources */,
 				F0E5694A27560C5F00D59BB1 /* Persistence.swift in Sources */,
 				F02601002760DB4F00B9B62C /* ImageLoader.swift in Sources */,
+				F026014F276B4A1800B9B62C /* UsersManager.swift in Sources */,
 				F0E5697A27592BE200D59BB1 /* EndPointType.swift in Sources */,
 				F02601022760DFEB00B9B62C /* NewsCardView.swift in Sources */,
 				F026010E27634D8C00B9B62C /* UIApplication.swift in Sources */,
 				F02601242768714200B9B62C /* CoreDataStore.swift in Sources */,
 				F0E5695827560E5D00D59BB1 /* UiColor.swift in Sources */,
 				F0260115276620AF00B9B62C /* ProfilePageView.swift in Sources */,
+				F0260144276A473700B9B62C /* CoronaAPI.swift in Sources */,
 				F0260117276855EA00B9B62C /* LikesVM.swift in Sources */,
 				F02601362769E76200B9B62C /* WebViewExt.swift in Sources */,
 				F02600F1275FB57E00B9B62C /* SearchListView.swift in Sources */,
@@ -584,6 +621,7 @@
 				F0E5698E2759352200D59BB1 /* URLParamEnncoding.swift in Sources */,
 				F02601322769AEE200B9B62C /* LikeButton.swift in Sources */,
 				F0260104276218B300B9B62C /* LikesPageView.swift in Sources */,
+				F026014D276B191700B9B62C /* ImagePicker.swift in Sources */,
 				F0E5698827592E5100D59BB1 /* NewsRepository.swift in Sources */,
 				F0E5694327560C5D00D59BB1 /* ContentView.swift in Sources */,
 				F0E5696527564E3A00D59BB1 /* DetailsPageView.swift in Sources */,
@@ -596,14 +634,19 @@
 				F0E5695A275648A200D59BB1 /* RegisterView.swift in Sources */,
 				F0E56970275926A800D59BB1 /* JSONEncoding.swift in Sources */,
 				F0E5697827592B9200D59BB1 /* NetworkHelper.swift in Sources */,
+				F026013E276A44A500B9B62C /* CoronaVM.swift in Sources */,
+				F0260149276A499000B9B62C /* BarChartExt.swift in Sources */,
 				F026010C276342C200B9B62C /* SearchView.swift in Sources */,
+				F0260147276A490800B9B62C /* CoronaPageView.swift in Sources */,
 				F026012B2768D28C00B9B62C /* DispQueue.swift in Sources */,
 				F02601382769F1AD00B9B62C /* TopBarView.swift in Sources */,
 				F0E5696027564C6E00D59BB1 /* SearchPageView.swift in Sources */,
 				F026010A276337D400B9B62C /* Consts.swift in Sources */,
+				F026014B276B173900B9B62C /* ProfileHeader.swift in Sources */,
 				F0E5698C2759350800D59BB1 /* ParamEncoding.swift in Sources */,
 				F02601122763A3A800B9B62C /* ViewExt.swift in Sources */,
 				F0E5698227592C8600D59BB1 /* Router.swift in Sources */,
+				F0260140276A452C00B9B62C /* CoronaRepository.swift in Sources */,
 				F0260122276870CA00B9B62C /* CoreDataDeleteModelPublisher.swift in Sources */,
 				F0E5694D27560C5F00D59BB1 /* NewsApp.xcdatamodeld in Sources */,
 				F0E5698A27592EC700D59BB1 /* ApiPost.swift in Sources */,
@@ -615,6 +658,7 @@
 				F0E5694127560C5D00D59BB1 /* NewsAppApp.swift in Sources */,
 				F0E5695C27564B3900D59BB1 /* Base.swift in Sources */,
 				F026011E27685DC400B9B62C /* CoreDataSaveModelPublisher.swift in Sources */,
+				F0260142276A45AE00B9B62C /* CoronaModels.swift in Sources */,
 				F0E5696E2759245500D59BB1 /* NewsApi.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
