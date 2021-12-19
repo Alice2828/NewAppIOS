@@ -24,7 +24,9 @@ struct CoronaPageView: View {
     var body: some View {
         GeometryReader { geometry in
             VStack(alignment: .center){
+                //tabs
                 TopTabs(geometry: geometry, coronaViewRouter: coronaViewRouter, selectedIndex: $selectedIndex, items: items)
+                //info or chart
                 ZStack(alignment: .center){
                     switch coronaViewRouter.currentPage {
                     case .info:

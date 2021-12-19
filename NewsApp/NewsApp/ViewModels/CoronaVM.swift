@@ -20,6 +20,11 @@ class CoronaVM: ObservableObject {
     @Published var label3:  String = ""
     @Published var label4:  String = ""
     
+    @Published var confirmed: String = ""
+    @Published var newConf:  String = ""
+    @Published var death:  String = ""
+    @Published var recovered:  String = ""
+    
     enum State {
         case idle
         case loading
@@ -27,6 +32,7 @@ class CoronaVM: ObservableObject {
         case loaded
     }
     @Published private(set) var state = State.idle
+    @Published private(set) var infoState = State.idle
     
     init(coronaRepo: CoronaRepositoryProtocol = CoronaRepository()) {
         self.coronaRepo = coronaRepo
@@ -51,6 +57,27 @@ class CoronaVM: ObservableObject {
             return Double(data[index].value)/Double(max)
         } else {
             return 1
+        }
+    }
+    
+    func getTotal(){
+        infoState = .loading
+        DispatchQueue.global(qos: .background).async { [self] in
+            coronaRepo.getTotal(){ [weak self] result in
+                switch result {
+                case .success(let dataCorona):
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute:  {
+                        self?.infoState = .loaded
+                        self?.confirmed = String(dataCorona.Global.TotalConfirmed!)
+                        self?.newConf = String(dataCorona.Global.NewConfirmed!)
+                        self?.death = String(dataCorona.Global.TotalDeaths!)
+                        self?.recovered = String(dataCorona.Global.TotalRecovered!)
+                    })
+                case .failure(let error):
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 4.0, execute:  { self?.state = .failed(error)
+                    })
+                }
+            }
         }
     }
     

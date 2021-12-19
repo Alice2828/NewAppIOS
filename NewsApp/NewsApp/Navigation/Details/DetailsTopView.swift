@@ -14,27 +14,28 @@ struct DetailsTopView: View {
     let actionBack: () -> ()
     var article: Article
     @EnvironmentObject var likesViewModel: LikesViewModel
+    @State var noUrl: Bool = false
     
     var imageToDisplay: Image {
         if likesViewModel.likesObservable.first(where: {$0.title == article.title}) != nil {
-            print("HIHIHI \(likesViewModel.likesObservable)")
             return Image(systemName: "heart.fill")
         } else {
             return Image(systemName: "heart")
         }
     }
-    @State var noUrl: Bool = false
-    
     
     var body: some View {
         VStack{
             HStack(spacing: 12) {
+                //btn back
                 Button(action: {
                     actionBack()
                 }) {
                     ButtonImageInCircle(image:  Image(systemName: "arrow.backward"))
                 }
                 Spacer()
+                
+                //btn share
                 Button(action: {
                     if let url = article.url{
                         actionSheet(url: url)
@@ -47,6 +48,8 @@ struct DetailsTopView: View {
                 } .alert(isPresented: $noUrl) {
                     Alert(title: Text("There is no url to share"), message: Text("Try another article"), dismissButton: .cancel())
                 }
+                
+                //btn like
                 Button(action: {
                     likesViewModel.saveOrDeleteLike(article: article)
                 }) {
@@ -115,45 +118,4 @@ struct DetailsTopView: View {
         
         return (maxHeight, radius, minHeight)
     }
-    
-    struct ButtonImageInCircle: View{
-        var image: Image
-        var body: some View {
-            image
-                .renderingMode(.original)
-                .foregroundColor(Color("navTitle1"))
-                .font(.system(size: 16, weight: .medium))
-                .frame(width: 36, height: 36)
-                .background(Color.white)
-                .clipShape(Circle())
-                .shadow(color: Color.black.opacity(0.1), radius: 1, x: 0, y: 1)
-                .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 10)
-        }
-    }
-    
-}
-
-
-struct TitleView: View {
-    
-    let title: String
-    let imageName: String
-    var foregroundColor: Color = Color("navTitle1")
-    
-    var body: some View {
-        HStack(spacing: 12) {
-            Image(imageName)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .foregroundColor(foregroundColor)
-                .frame(width: 16, height: 16)
-                .padding(.leading, 24)
-            Text(title)
-                .font(.system(size: 20))
-                .fontWeight(.semibold)
-                .foregroundColor(foregroundColor)
-            Spacer()
-        }
-    }
-    
 }

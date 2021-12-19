@@ -13,24 +13,30 @@ import Combine
 
 @main
 struct NewsAppApp: App {
-    @State var loggedIn: Bool = false
-    @StateObject var viewRouter = ViewRouter()
     var coreDataStore = CoreDataStore.default
     var bag: [AnyCancellable] = []
+    @StateObject var viewRouter = ViewRouter()
+    @StateObject var newsViewModel = NewsViewModel()
+    @StateObject var coronaVm = CoronaVM()
+    @State var loggedIn: Bool = false
+    @State var likesVm: LikesViewModel
+    @State var usersManager: UsersManager
     
     init() {
         FirebaseApp.configure()
         let initVal = Auth.auth().currentUser != nil && (Auth.auth().currentUser?.isEmailVerified ?? false)
         _loggedIn = State(initialValue: initVal)
+        _likesVm = State(initialValue: LikesViewModel(coreDataStore: coreDataStore))
+        _usersManager = State(initialValue: UsersManager(coreDataStore: coreDataStore))
     }
     
     var body: some Scene {
         WindowGroup {
             if(loggedIn){
-                Base(viewRouter: viewRouter, loggedIn: $loggedIn).environmentObject(NewsViewModel())
-                    .environmentObject(LikesViewModel(coreDataStore: coreDataStore))
-                    .environmentObject(CoronaVM())
-                    .environmentObject(UsersManager(coreDataStore: coreDataStore))
+                Base(viewRouter: viewRouter, loggedIn: $loggedIn).environmentObject(newsViewModel)
+                    .environmentObject(likesVm)
+                    .environmentObject(coronaVm)
+                    .environmentObject(usersManager)
             }
             else{
                 LoginView(loggedIn: $loggedIn)

@@ -11,9 +11,7 @@ import SwiftUI
 struct TopTabs: View {
     var geometry: GeometryProxy
     @ObservedObject var coronaViewRouter: CoronaViewRouter
-    
     @Binding public var selectedIndex: Int
-    
     public let items: [TopTabItem]
     
     public init(geometry: GeometryProxy, coronaViewRouter: CoronaViewRouter, selectedIndex: Binding<Int>, items: [TopTabItem]) {
@@ -50,45 +48,5 @@ struct TopTabs: View {
         .cornerRadius(40)
         .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: -2)
         .edgesIgnoringSafeArea(.bottom)
-    }
-}
-
-public struct TopTabItemView: View {
-    public let isSelected: Bool
-    public let item: TopTabItem
-    @ObservedObject var coronaViewRouter: CoronaViewRouter
-    var index: Int
-    
-    public var body: some View {
-        HStack {
-            Image(systemName: item.icon)
-                .imageScale(.large)
-                .foregroundColor(isSelected ? item.color : .primary)
-            
-            if isSelected {
-                Text(item.title)
-                    .foregroundColor(item.color)
-                    .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-            }
-        }
-        .padding()
-        .background(
-            Capsule()
-                .fill(isSelected ? item.color.opacity(0.2) : Color.clear)
-        )
-    }
-}
-
-public struct TopTabItem {
-    public let icon: String
-    public let title: String
-    public let color: Color
-    
-    public init(icon: String,
-                title: String,
-                color: Color) {
-        self.icon = icon
-        self.title = title
-        self.color = color
     }
 }
