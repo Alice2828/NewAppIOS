@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct TopView: View {
+struct DetailsTopView: View {
     @ObservedObject var imageLoader: ImageLoader
     @Binding var offset: CGFloat?
     @Binding var initialOffset: CGFloat?

@@ -46,6 +46,10 @@
 		F026014B276B173900B9B62C /* ProfileHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F026014A276B173900B9B62C /* ProfileHeader.swift */; };
 		F026014D276B191700B9B62C /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F026014C276B191700B9B62C /* ImagePicker.swift */; };
 		F026014F276B4A1800B9B62C /* UsersManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F026014E276B4A1800B9B62C /* UsersManager.swift */; };
+		F0260151276DFAD000B9B62C /* TopTabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0260150276DFACF00B9B62C /* TopTabs.swift */; };
+		F0260153276DFB3600B9B62C /* CoronaViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0260152276DFB3600B9B62C /* CoronaViewRouter.swift */; };
+		F0260155276DFCFA00B9B62C /* ChartPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0260154276DFCFA00B9B62C /* ChartPageView.swift */; };
+		F0260157276DFD5900B9B62C /* InfoPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0260156276DFD5900B9B62C /* InfoPageView.swift */; };
 		F0E5694127560C5D00D59BB1 /* NewsAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E5694027560C5D00D59BB1 /* NewsAppApp.swift */; };
 		F0E5694327560C5D00D59BB1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E5694227560C5D00D59BB1 /* ContentView.swift */; };
 		F0E5694527560C5F00D59BB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F0E5694427560C5F00D59BB1 /* Assets.xcassets */; };
@@ -119,6 +123,10 @@
 		F026014A276B173900B9B62C /* ProfileHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeader.swift; sourceTree = "<group>"; };
 		F026014C276B191700B9B62C /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		F026014E276B4A1800B9B62C /* UsersManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersManager.swift; sourceTree = "<group>"; };
+		F0260150276DFACF00B9B62C /* TopTabs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopTabs.swift; sourceTree = "<group>"; };
+		F0260152276DFB3600B9B62C /* CoronaViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoronaViewRouter.swift; sourceTree = "<group>"; };
+		F0260154276DFCFA00B9B62C /* ChartPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartPageView.swift; sourceTree = "<group>"; };
+		F0260156276DFD5900B9B62C /* InfoPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoPageView.swift; sourceTree = "<group>"; };
 		F0E5693D27560C5D00D59BB1 /* NewsApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewsApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0E5694027560C5D00D59BB1 /* NewsAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsAppApp.swift; sourceTree = "<group>"; };
 		F0E5694227560C5D00D59BB1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -270,6 +278,8 @@
 				F0E5695D27564BEA00D59BB1 /* BottomNavBar.swift */,
 				F02601262768AB5900B9B62C /* ViewRouter.swift */,
 				F02601372769F1AD00B9B62C /* TopBarView.swift */,
+				F0260150276DFACF00B9B62C /* TopTabs.swift */,
+				F0260152276DFB3600B9B62C /* CoronaViewRouter.swift */,
 			);
 			path = Navigation;
 			sourceTree = "<group>";
@@ -304,6 +314,8 @@
 			isa = PBXGroup;
 			children = (
 				F0260146276A490800B9B62C /* CoronaPageView.swift */,
+				F0260154276DFCFA00B9B62C /* ChartPageView.swift */,
+				F0260156276DFD5900B9B62C /* InfoPageView.swift */,
 			);
 			path = Corona;
 			sourceTree = "<group>";
@@ -605,6 +617,7 @@
 				F02601002760DB4F00B9B62C /* ImageLoader.swift in Sources */,
 				F026014F276B4A1800B9B62C /* UsersManager.swift in Sources */,
 				F0E5697A27592BE200D59BB1 /* EndPointType.swift in Sources */,
+				F0260157276DFD5900B9B62C /* InfoPageView.swift in Sources */,
 				F02601022760DFEB00B9B62C /* NewsCardView.swift in Sources */,
 				F026010E27634D8C00B9B62C /* UIApplication.swift in Sources */,
 				F02601242768714200B9B62C /* CoreDataStore.swift in Sources */,
@@ -615,6 +628,7 @@
 				F02601362769E76200B9B62C /* WebViewExt.swift in Sources */,
 				F02600F1275FB57E00B9B62C /* SearchListView.swift in Sources */,
 				F0260119276859F300B9B62C /* LikesListView.swift in Sources */,
+				F0260153276DFB3600B9B62C /* CoronaViewRouter.swift in Sources */,
 				F0E5695E27564BEA00D59BB1 /* BottomNavBar.swift in Sources */,
 				F026013C2769FB7400B9B62C /* LoaderView.swift in Sources */,
 				F0260120276870A500B9B62C /* CoreDataFetchResultPublisher.swift in Sources */,
@@ -628,12 +642,14 @@
 				F0E5697C27592BFE00D59BB1 /* HTTPMethod.swift in Sources */,
 				F026012E27690BC900B9B62C /* Rows.swift in Sources */,
 				F0E5698027592C6F00D59BB1 /* NetworkLogger.swift in Sources */,
+				F0260155276DFCFA00B9B62C /* ChartPageView.swift in Sources */,
 				F026011B27685AE700B9B62C /* LikesCardView.swift in Sources */,
 				F02601272768AB5900B9B62C /* ViewRouter.swift in Sources */,
 				F0E5696827564E9F00D59BB1 /* NewsViewModel.swift in Sources */,
 				F0E5695A275648A200D59BB1 /* RegisterView.swift in Sources */,
 				F0E56970275926A800D59BB1 /* JSONEncoding.swift in Sources */,
 				F0E5697827592B9200D59BB1 /* NetworkHelper.swift in Sources */,
+				F0260151276DFAD000B9B62C /* TopTabs.swift in Sources */,
 				F026013E276A44A500B9B62C /* CoronaVM.swift in Sources */,
 				F0260149276A499000B9B62C /* BarChartExt.swift in Sources */,
 				F026010C276342C200B9B62C /* SearchView.swift in Sources */,

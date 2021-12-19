@@ -4,86 +4,82 @@
 //
 //  Created by Lebedeva Alice on 15.12.2021.
 //
-
+import Foundation
 import SwiftUI
+import UIKit
 
 struct BarChartCell: View {
-    
+    var label: String
     var value: Double
     var barColor: Color
+    var geometry: GeometryProxy
+    var maxValue: Double
+    var fullBarHeight: Double
     
     var body: some View {
-        RoundedRectangle(cornerRadius: 5)
-            .fill(barColor)
-            .scaleEffect(CGSize(width: 1, height: value), anchor: .bottom)
-        
+        let barHeight = (Double(fullBarHeight) / maxValue) * value + 20
+            VStack{
+                ZStack{
+                    VStack {
+                        Spacer()
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(barColor)
+                            .frame(height: CGFloat(barHeight), alignment: .trailing)
+                    }
+                    VStack {
+                        Spacer()
+                        Text("\(value, specifier: "%.0F")")
+                            .font(.footnote)
+                            .foregroundColor(.white)
+                            .fontWeight(.bold)
+                    }
+                    
+                }
+                Text(label).lineLimit(1).frame(maxWidth: .infinity)
+        }
     }
 }
 
 struct BarChart: View {
     
     var title: String
-    var legend: String
-    var barColor: Color
     var data: [ChartData]
     var geometry: GeometryProxy
-//
-//    @State private var currentValue = ""
-//    @State private var currentLabel = ""
     
     var body: some View {
+        let fullBarHeight = 27*geometry.size.height/28 * 0.75
+        let maxValue = data.map { $0.value }.max()!
+        
         VStack(alignment: .leading) {
             Text(title)
                 .bold()
                 .font(.largeTitle)
-           
-                VStack {
-                    HStack {
-                        ForEach(0..<data.count, id: \.self) { i in
-                            BarChartCell(value: normalizedValue(index: i), barColor: barColor)
-                                .animation(.spring())
-                                .padding(.top)
-                        }
-//                    if currentLabel.isEmpty {
-//                        Text(legend)
-//                            .bold()
-//                            .foregroundColor(.black)
-//                            .padding(5)
-//                            .background(RoundedRectangle(cornerRadius: 5).foregroundColor(.white).shadow(radius: 3))
-//                    } else {
-//                        Text(currentLabel)
-//                            .bold()
-//                            .foregroundColor(.black)
-//                            .padding(5)
-//                            .background(RoundedRectangle(cornerRadius: 5).foregroundColor(.white).shadow(radius: 3))
-//                            .animation(.easeIn)
-//                    }
-               }
-            }
+            
+            HStack(alignment: .bottom) {
+                ForEach(data, id: \.self) { value in
+                    switch value.id{
+                    case 1:
+                        BarChartCell(label:"Confirmed", value: value.value, barColor: .blue, geometry: geometry, maxValue: maxValue, fullBarHeight: fullBarHeight)
+                    case 2:
+                        BarChartCell(label:"Active",value: value.value, barColor: .black, geometry: geometry,maxValue: maxValue, fullBarHeight: fullBarHeight)
+                    case 3:
+                        BarChartCell(label:"Deaths",value: value.value, barColor: .red, geometry: geometry,maxValue: maxValue, fullBarHeight: fullBarHeight)
+                    case 4:
+                        BarChartCell(label:"Recovered",value: value.value, barColor: .green, geometry: geometry,maxValue: maxValue, fullBarHeight: fullBarHeight)
+                    default:
+                        BarChartCell(label:"Confirmed",value: value.value, barColor: .green, geometry: geometry, maxValue: maxValue, fullBarHeight: fullBarHeight)
+                    }
+                }
+            }.padding(.bottom, 40)
+                .padding(.horizontal, 10)
         }
-        .padding()
     }
     
-    func normalizedValue(index: Int) -> Double {
-             var allValues: [Double]    {
-                 var values = [Double]()
-                 for data in data {
-                     values.append(data.value)
-                 }
-                 return values
-             }
-             guard let max = allValues.max() else {
-                 return 1
-             }
-             if max != 0 {
-                 return Double(data[index].value)/Double(max)
-             } else {
-                 return 1
-             }
-    }
+    
 }
 
-struct ChartData {
+struct ChartData: Hashable {
+    var id: Int
     var label: String
     var value: Double
 }

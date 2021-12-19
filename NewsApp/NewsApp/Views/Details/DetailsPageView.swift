@@ -19,7 +19,7 @@ struct DetailsPageView: View {
     
     var body: some View {
         VStack{
-            TopView(imageLoader: imageLoader, offset: self.$offset,
+            DetailsTopView(imageLoader: imageLoader, offset: self.$offset,
                     initialOffset: self.$initialOffset, actionBack: goBack, article: article)
             
             ScrollView(.vertical, showsIndicators: false) {
