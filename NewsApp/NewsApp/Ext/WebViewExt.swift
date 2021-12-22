@@ -10,6 +10,7 @@ import SwiftUI
 import Combine
 import WebKit
 import UIKit
+import WebViewWarmUper
 
 enum WebViewNavigationAction {
     case backward, forward, reload
@@ -27,13 +28,13 @@ struct WebView: UIViewRepresentable {
     @Binding var isLoaderVisible: Bool
     
     func makeUIView(context: Context) -> WKWebView {
-        
         let preferences = WKPreferences()
         
         let configuration = WKWebViewConfiguration()
         configuration.preferences = preferences
         
-        let webView = WKWebView(frame: CGRect.zero, configuration: configuration)
+        //let webView = WKWebView(frame: CGRect.zero, configuration: configuration)
+        let webView = WKWebViewWarmUper.shared.dequeue()
         webView.scrollView.bounces = false
         webView.navigationDelegate = context.coordinator
         webView.allowsBackForwardNavigationGestures = true
@@ -50,8 +51,6 @@ struct WebView: UIViewRepresentable {
         }
     }
     
-    var webView: WKWebView = WKWebView()
-    
     class Coordinator: NSObject, WKNavigationDelegate {
         var parent: WebView
         
@@ -60,12 +59,19 @@ struct WebView: UIViewRepresentable {
         }
         
         func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-            webView.evaluateJavaScript("document.documentElement.scrollHeight", completionHandler: { (height, error) in
-                DispatchQueue.main.async {
-                    self.parent.dynamicHeight = height as! CGFloat
-                    self.parent.isLoaderVisible = false
+            webView.evaluateJavaScript("document.readyState", completionHandler: { (complete, error) in
+                if complete != nil {
+                    webView.evaluateJavaScript("document.documentElement.scrollHeight", completionHandler: { (height, error) in
+                        DispatchQueue.main.async {
+                            if let ht = height{
+                                self.parent.dynamicHeight = ht as! CGFloat
+                            }
+                            self.parent.isLoaderVisible = false
+                        }
+                    })
                 }
             })
+            
         }
     }
     

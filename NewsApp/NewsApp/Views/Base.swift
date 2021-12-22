@@ -43,17 +43,17 @@ struct BasicView: View {
             switch viewRouter.currentPage {
             case .home:
                 NavigationView{
-                    TopPageView().navigationTitle("Top News") }.navigationViewStyle(StackNavigationViewStyle()).navigationBarColor(backgroundColor: .systemTeal, tintColor: .white)
+                    TopPageView().navigationTitle("Top News") }.navigationViewStyle(StackNavigationViewStyle()).navigationBarColor(backgroundColor: UIColor.init(rgb:  0x81d5fa), tintColor: .white)
             case .search:
                 NavigationView{
                     SearchPageView().navigationTitle("Search News")
                 }
-                .navigationViewStyle(StackNavigationViewStyle()).navigationBarColor(backgroundColor: .systemIndigo, tintColor: .white)
+                .navigationViewStyle(StackNavigationViewStyle()).navigationBarColor(backgroundColor: UIColor.init(rgb:  0x81d5fa), tintColor: .white)
             case .liked:
                 NavigationView{
                     LikesPageView().navigationTitle("Favorites")
                 }
-                .navigationViewStyle(StackNavigationViewStyle()).navigationBarColor(backgroundColor: .systemPink, tintColor: .white)
+                .navigationViewStyle(StackNavigationViewStyle()).navigationBarColor(backgroundColor: UIColor.init(rgb:  0x81d5fa), tintColor: .white)
             case .profile:
                 ProfilePageView(loggedIn: $loggedIn)
             case .corona:

@@ -58,6 +58,8 @@
 		F0260168276F6BFB00B9B62C /* TopTabItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0260167276F6BFB00B9B62C /* TopTabItem.swift */; };
 		F026016A276F6C2800B9B62C /* TopTabItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0260169276F6C2800B9B62C /* TopTabItemView.swift */; };
 		F026016C276F7A2100B9B62C /* ArticleDetailWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F026016B276F7A2100B9B62C /* ArticleDetailWebView.swift */; };
+		F026016E2771C2E900B9B62C /* TextFieldAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F026016D2771C2E800B9B62C /* TextFieldAlertViewController.swift */; };
+		F02601702771C30300B9B62C /* TextFieldAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = F026016F2771C30300B9B62C /* TextFieldAlert.swift */; };
 		F0E5694127560C5D00D59BB1 /* NewsAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E5694027560C5D00D59BB1 /* NewsAppApp.swift */; };
 		F0E5694327560C5D00D59BB1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E5694227560C5D00D59BB1 /* ContentView.swift */; };
 		F0E5694527560C5F00D59BB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F0E5694427560C5F00D59BB1 /* Assets.xcassets */; };
@@ -143,6 +145,8 @@
 		F0260167276F6BFB00B9B62C /* TopTabItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopTabItem.swift; sourceTree = "<group>"; };
 		F0260169276F6C2800B9B62C /* TopTabItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopTabItemView.swift; sourceTree = "<group>"; };
 		F026016B276F7A2100B9B62C /* ArticleDetailWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleDetailWebView.swift; sourceTree = "<group>"; };
+		F026016D2771C2E800B9B62C /* TextFieldAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldAlertViewController.swift; sourceTree = "<group>"; };
+		F026016F2771C30300B9B62C /* TextFieldAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldAlert.swift; sourceTree = "<group>"; };
 		F0E5693D27560C5D00D59BB1 /* NewsApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewsApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0E5694027560C5D00D59BB1 /* NewsAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsAppApp.swift; sourceTree = "<group>"; };
 		F0E5694227560C5D00D59BB1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -446,6 +450,8 @@
 				F02601352769E76200B9B62C /* WebViewExt.swift */,
 				F0260148276A499000B9B62C /* BarChartExt.swift */,
 				F026014C276B191700B9B62C /* ImagePicker.swift */,
+				F026016D2771C2E800B9B62C /* TextFieldAlertViewController.swift */,
+				F026016F2771C30300B9B62C /* TextFieldAlert.swift */,
 			);
 			path = Ext;
 			sourceTree = "<group>";
@@ -674,6 +680,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F026016C276F7A2100B9B62C /* ArticleDetailWebView.swift in Sources */,
+				F02601702771C30300B9B62C /* TextFieldAlert.swift in Sources */,
 				F02600FB275FBA1F00B9B62C /* TopPageView.swift in Sources */,
 				F0E5697E27592C1A00D59BB1 /* HTTPTask.swift in Sources */,
 				F0E5696327564D8D00D59BB1 /* Article.swift in Sources */,
@@ -742,6 +749,7 @@
 				F02601342769B44700B9B62C /* ShareButton.swift in Sources */,
 				F0E56975275926F800D59BB1 /* NetworkResponseError.swift in Sources */,
 				F026015F276F68E300B9B62C /* HStackImgText.swift in Sources */,
+				F026016E2771C2E900B9B62C /* TextFieldAlertViewController.swift in Sources */,
 				F0E5694127560C5D00D59BB1 /* NewsAppApp.swift in Sources */,
 				F0E5695C27564B3900D59BB1 /* Base.swift in Sources */,
 				F0260166276F6ABA00B9B62C /* ButtonImageInCircle.swift in Sources */,

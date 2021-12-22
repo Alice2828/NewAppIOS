@@ -10,15 +10,33 @@ import SwiftUI
 
 struct LikesListView: View {
     @EnvironmentObject var likesViewModel: LikesViewModel
+    @State var showSecondView = false
     
     var body: some View {
-        ZStack{
-            List {
-                ForEach(likesViewModel.likesObservable, id: \.self) { article in
-                    LikedArticleRow(article: article)
+        Group {
+            if !showSecondView {
+                VStack{
+                    Spacer()
+                    LoaderView()
+                    Spacer()
                 }
-                
             }
-        }.onAppear{likesViewModel.fetch()}
+            if showSecondView {
+                ZStack{
+                    List {
+                        ForEach(likesViewModel.likesObservable, id: \.self) { article in
+                            LikedArticleRow(article: article)
+                        }
+                        
+                    }
+                }.onAppear{likesViewModel.fetch()}
+            }
+        }.onAppear() {
+            Timer.scheduledTimer(withTimeInterval: 2, repeats: false) { (_) in
+                withAnimation {
+                    self.showSecondView = true
+                }
+            }
+        }
     }
 }

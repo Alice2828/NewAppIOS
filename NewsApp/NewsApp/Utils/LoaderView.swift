@@ -8,11 +8,12 @@
 import SwiftUI
 
 struct LoaderView: View {
-    @State var isSpinCircle = false
+    @State private var rotateDegree : CGFloat = 0
+    
     var body: some View {
         ZStack {
             Circle()
-                .fill(LinearGradient(gradient: Gradient(colors: [Color("navTitle1"), Color.purple]), startPoint: .top, endPoint: .bottom))
+                .fill(LinearGradient(gradient: Gradient(colors: [Color(UIColor.init(rgb:  0x81d5fa)), Color.purple]), startPoint: .top, endPoint: .bottom))
                 .frame(width: 60, height: 60, alignment: .center)
             
             VStack {
@@ -21,10 +22,13 @@ struct LoaderView: View {
                     .stroke(Color.white, lineWidth: 2)
                     .frame(width:50, height: 50)
                     .padding(.all, 8)
-                    .rotationEffect(.degrees(isSpinCircle ? 0 : -360), anchor: .center)
-                    .animation(Animation.linear(duration: 0.6).repeatForever(autoreverses: false))
+                    .rotationEffect(Angle(degrees: Double(rotateDegree)))
                     .onAppear {
-                        self.isSpinCircle = true
+                        DispatchQueue.main.async {
+                            withAnimation(Animation.linear(duration: 0.6).repeatForever(autoreverses: false)) {
+                                self.rotateDegree = 360
+                            }
+                        }
                     }
             }
         }

@@ -27,7 +27,11 @@ struct SearchListView: View {
                 }
                 
             case .loading:
-                ProgressView()
+                VStack{
+                    Spacer()
+                    LoaderView()
+                    Spacer()
+                }
                 
             case .failed(let error):
                 if (newsViewModel.searchedText == ""){

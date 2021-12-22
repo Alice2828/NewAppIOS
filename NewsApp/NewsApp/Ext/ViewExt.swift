@@ -39,3 +39,12 @@ extension View {
     self.modifier(NavigationBarColor(backgroundColor: backgroundColor, tintColor: tintColor))
   }
 }
+
+extension View {
+  func textFieldAlert(isPresented: Binding<Bool>,
+                      content: @escaping () -> TextFieldAlert) -> some View {
+    TextFieldWrapper(isPresented: isPresented,
+                     presentingView: self,
+                     content: content)
+  }
+}

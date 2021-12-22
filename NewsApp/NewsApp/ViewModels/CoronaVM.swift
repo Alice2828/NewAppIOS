@@ -130,6 +130,11 @@ class CoronaVM: ObservableObject {
                         self?.coronaInfoBar2 = data2
                         self?.coronaInfoBar3 = data3
                         self?.coronaInfoBar4 = data4
+                        
+                        self?.label1 = label1
+                        self?.label2 = label2
+                        self?.label3 = label3
+                        self?.label4 =  label4
                     })
                 case .failure(let error):
                     DispatchQueue.main.asyncAfter(deadline: .now() + 4.0, execute:  { self?.state = .failed(error)

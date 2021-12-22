@@ -87,7 +87,7 @@ struct DetailsTopView: View {
     private func viewForBackground() -> some View {
         let values = heightAndRadiusForBackground()
         return AnyView(RoundedRectangle(cornerRadius: values.1)
-                        .fill(LinearGradient(gradient: Gradient(colors: [Color("navTitle1"), Color.purple]), startPoint: .top, endPoint: .bottom))
+                        .fill(LinearGradient(gradient: Gradient(colors: [Color(UIColor.init(rgb:  0x81d5fa)), Color.purple]), startPoint: .top, endPoint: .bottom))
                         .frame(height: values.0)
                         .animation(.linear))
         

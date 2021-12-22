@@ -12,21 +12,31 @@ import CoreData
 struct ProfilePageView: View {
     @Binding var loggedIn: Bool
     @EnvironmentObject var usersManager: UsersManager
+    @State var alertIsPresented: Bool = false
+    @State var text: String!
     
+    func setTextValue(){
+        text =  usersManager.currentUser?.name
+    }
     var body: some View {
-        VStack{
-            if let currentUsr = usersManager.currentUser{
-                if let img = currentUsr.image{
-                    ProfileHeader(image: UIImage(data: img) ?? UIImage(imageLiteralResourceName: "placeholder"))
-                }
-                else{
-                    ProfileHeader(image: UIImage(imageLiteralResourceName: "placeholder"))
+        GeometryReader{ geometry in
+            VStack{
+                if let currentUsr = usersManager.currentUser{
+                    if let img = currentUsr.image{
+                        ProfileHeader(image: UIImage(data: img) ?? UIImage(imageLiteralResourceName: "placeholder"), name: $text, alertIsPresented: $alertIsPresented, logout: logout)
+                    }
+                    else{
+                        ProfileHeader(image: UIImage(imageLiteralResourceName: "placeholder"), name: $text, alertIsPresented: $alertIsPresented, logout: logout)
+                    }
                 }
             }
-            Button("Exit"){logout()}.padding()
-            Spacer()
+            
+            }.onAppear{setTextValue()}
+            .textFieldAlert(isPresented: $alertIsPresented) { () -> TextFieldAlert in
+                TextFieldAlert(title: "Change name", message: "Who are you?", text: self.$text){
+                    usersManager.changeName(name: text)
+                }
         }
-        .padding(.bottom, 30)
     }
     
     func logout(){

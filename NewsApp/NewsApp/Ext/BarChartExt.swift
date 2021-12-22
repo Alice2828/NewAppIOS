@@ -18,24 +18,24 @@ struct BarChartCell: View {
     
     var body: some View {
         let barHeight = (Double(fullBarHeight) / maxValue) * value + 20
-            VStack{
-                ZStack{
-                    VStack {
-                        Spacer()
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(barColor)
-                            .frame(height: CGFloat(barHeight), alignment: .trailing)
-                    }
-                    VStack {
-                        Spacer()
-                        Text("\(value, specifier: "%.0F")")
-                            .font(.footnote)
-                            .foregroundColor(.white)
-                            .fontWeight(.bold)
-                    }
-                    
+        VStack{
+            ZStack{
+                VStack {
+                    Spacer()
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(barColor)
+                        .frame(height: CGFloat(barHeight), alignment: .trailing)
                 }
-                Text(label).lineLimit(1).frame(maxWidth: .infinity)
+                VStack {
+                    Spacer()
+                    Text("\(value, specifier: "%.0F")")
+                        .font(.footnote)
+                        .foregroundColor(.white)
+                        .fontWeight(.bold)
+                }
+                
+            }
+            Text(label).lineLimit(1).frame(maxWidth: .infinity)
         }
     }
 }
@@ -47,15 +47,11 @@ struct BarChart: View {
     var geometry: GeometryProxy
     
     var body: some View {
-        let fullBarHeight = 27*geometry.size.height/28 * 0.75
+        let fullBarHeight = 24*geometry.size.height/28 * 0.75
         let maxValue = data.map { $0.value }.max()!
         
         VStack(alignment: .leading) {
-            Text(title)
-                .bold()
-                .font(.largeTitle)
-            
-            HStack(alignment: .bottom) {
+            HStack {
                 ForEach(data, id: \.self) { value in
                     switch value.id{
                     case 1:
@@ -70,9 +66,14 @@ struct BarChart: View {
                         BarChartCell(label:"Confirmed",value: value.value, barColor: .green, geometry: geometry, maxValue: maxValue, fullBarHeight: fullBarHeight)
                     }
                 }
-            }.padding(.bottom, 40)
-                .padding(.horizontal, 10)
-        }
+            } .padding(.horizontal, 10)
+            HStack{
+                Spacer()
+                Text(title).foregroundColor(.blue)
+                    .fontWeight(.bold)
+                Spacer()
+            }
+        }.padding(.bottom, 60)
     }
     
     

@@ -9,7 +9,7 @@ import SwiftUI
 
 let items: [TopTabItem] = [
     TopTabItem(icon: "info.circle", title: "Info", color: .purple),
-    TopTabItem(icon: "chart.bar", title: "Chart", color: .pink)
+    TopTabItem(icon: "chart.bar", title: "Chart", color: Color(UIColor.init(rgb:  0x81d5fa)))
 ]
 
 struct CoronaPageView: View {

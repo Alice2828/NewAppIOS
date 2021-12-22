@@ -173,13 +173,6 @@ struct LoginView: View {
                     .padding()
                     .padding(.top, 100)
             }
-        }.navigate(to: RegisterView(), when: $goToRegister)
-    }
-}
-
-
-struct LoginView_Previews: PreviewProvider {
-    static var previews: some View {
-        LoginView(loggedIn: .constant(true))
+        }.navigate(to: RegisterView(loggedIn: $loggedIn, goToRegister: $goToRegister), when: $goToRegister)
     }
 }

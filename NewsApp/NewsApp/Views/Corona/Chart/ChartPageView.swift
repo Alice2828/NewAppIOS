@@ -32,12 +32,15 @@ struct ChartPageView: View {
             })
             
         case .loaded:
-            ScrollView(.horizontal){
-                HStack{
-                    BarChart(title:  coronaVM.label1, data: coronaVM.coronaInfoBar1, geometry: geometry).frame(width: geometry.size.width, height: 23*geometry.size.height/28 ,alignment: .bottom)
-                    BarChart(title: coronaVM.label2, data: coronaVM.coronaInfoBar2, geometry: geometry).frame(width: geometry.size.width, height: 23*geometry.size.height/28 ,alignment: .bottom)
-                    BarChart(title: coronaVM.label3, data: coronaVM.coronaInfoBar3, geometry: geometry).frame(width: geometry.size.width, height: 23*geometry.size.height/28 ,alignment: .bottom)
-                    BarChart(title: coronaVM.label4, data: coronaVM.coronaInfoBar4, geometry: geometry).frame(width: geometry.size.width, height: 23*geometry.size.height/28 ,alignment: .bottom)
+            VStack{
+                Text("Covid-19 numbers for last 4 days, Kz")
+                ScrollView(.horizontal){
+                        HStack{
+                            BarChart(title:  coronaVM.label1, data: coronaVM.coronaInfoBar1, geometry: geometry).frame(width: geometry.size.width, height: 25*geometry.size.height/28 ,alignment: .bottom)
+                            BarChart(title: coronaVM.label2, data: coronaVM.coronaInfoBar2, geometry: geometry).frame(width: geometry.size.width, height: 25*geometry.size.height/28 ,alignment: .bottom)
+                            BarChart(title: coronaVM.label3, data: coronaVM.coronaInfoBar3, geometry: geometry).frame(width: geometry.size.width, height: 25*geometry.size.height/28 ,alignment: .bottom)
+                            BarChart(title: coronaVM.label4, data: coronaVM.coronaInfoBar4, geometry: geometry).frame(width: geometry.size.width, height: 25*geometry.size.height/28 ,alignment: .bottom)
+                        }
                 }
             }
         }

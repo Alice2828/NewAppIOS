@@ -77,6 +77,7 @@ struct BtnRegister: View {
     @State private var showingAlert = false
     @Binding var showingAlertSuccess: Bool
     @EnvironmentObject var usersManager: UsersManager
+    @Binding var goToRegister: Bool
     
     var body: some View {
         Button("Register"){register()}
@@ -87,10 +88,10 @@ struct BtnRegister: View {
         .background(Color(UIColor.init(rgb:  0x81d5fa)))
         .cornerRadius(15.0)
         .alert(isPresented: $showingAlert) {
-            Alert(title: Text("Error..."), message: Text("Empty values"), dismissButton: .cancel())
+            Alert(title: Text("Error..."), message: Text("Empty values"), dismissButton: .default(Text("Retry")))
         }
         .alert(isPresented: $showingAlertSuccess) {
-            Alert(title: Text("Success!"), message: Text("Check email"), dismissButton: .cancel())
+            Alert(title: Text("Success!"), message: Text("Check email"), dismissButton: .default(Text("OK"), action: {goToRegister = false}))
         }
     }
     func register() {
@@ -145,6 +146,7 @@ struct CardViewRegister: View{
     @Binding var name: String
     @Binding var goToLogin: Bool
     @Binding var showingAlertSuccess: Bool
+    @Binding var goToRegister: Bool
     
     var body: some View{
         GeometryReader { geometry in
@@ -157,7 +159,7 @@ struct CardViewRegister: View{
                     NameRegister(name: $name)
                     EmailRegister(email: $email)
                     PasswordRegister(password: $password)
-                    BtnRegister(password: $password, name: $name, email: $email, showingAlertSuccess : $showingAlertSuccess)
+                    BtnRegister(password: $password, name: $name, email: $email, showingAlertSuccess : $showingAlertSuccess, goToRegister: $goToRegister)
                     FooterRegister(goToLogin: $goToLogin)
                 }
                 .padding(.horizontal, 10)
@@ -175,6 +177,8 @@ struct RegisterView: View {
     @State var name: String = ""
     @State var goToLogin: Bool = false
     @State var showingAlertSuccess = false
+    @Binding var loggedIn: Bool
+    @Binding var goToRegister: Bool
     
     var body: some View{
         GeometryReader { geometry in
@@ -184,13 +188,12 @@ struct RegisterView: View {
                     .fill(Color(UIColor.init(rgb:  0x81d5fa)))
                     .frame(width: geometry.size.width, height: geometry.size.height/2, alignment: .top)
                 
-                CardViewRegister(email: $email, password: $password, name: $name, goToLogin: $goToLogin, showingAlertSuccess: $showingAlertSuccess)
+                CardViewRegister(email: $email, password: $password, name: $name, goToLogin: $goToLogin, showingAlertSuccess: $showingAlertSuccess, goToRegister: $goToRegister)
                     .frame(maxWidth: .infinity, maxHeight: geometry.size.height*0.2, alignment: .center)
                     .padding()
                     .padding(.top, 100)
             }
-        }.navigate(to: LoginView(loggedIn: .constant(false)), when: $goToLogin)
-            .navigate(to: LoginView(loggedIn: .constant(false)), when: $showingAlertSuccess)
+        }.navigate(to: LoginView(loggedIn: $loggedIn), when: $goToLogin)
     }
 }
 

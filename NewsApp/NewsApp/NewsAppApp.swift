@@ -10,6 +10,7 @@ import Firebase
 import FirebaseAuth
 import CoreData
 import Combine
+import WebViewWarmUper
 
 @main
 struct NewsAppApp: App {
@@ -24,6 +25,7 @@ struct NewsAppApp: App {
     
     init() {
         FirebaseApp.configure()
+        WKWebViewWarmUper.shared.prepare()
         let initVal = Auth.auth().currentUser != nil && (Auth.auth().currentUser?.isEmailVerified ?? false)
         _loggedIn = State(initialValue: initVal)
         _likesVm = State(initialValue: LikesViewModel(coreDataStore: coreDataStore))
@@ -37,10 +39,17 @@ struct NewsAppApp: App {
                     .environmentObject(likesVm)
                     .environmentObject(coronaVm)
                     .environmentObject(usersManager)
+//                    .onAppear(perform: {
+//                        do{
+//                        try Auth.auth().signOut()
+//                        }
+//                        catch{}
+//
+//                    })
             }
             else{
                 LoginView(loggedIn: $loggedIn)
-                    .environmentObject(UsersManager(coreDataStore: coreDataStore))
+                    .environmentObject(usersManager)
             }
         }
     }
