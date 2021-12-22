@@ -32,13 +32,9 @@ class UsersManager: ObservableObject {
                         print("\(error.localizedDescription)")
                     }
                 } receiveValue: { [self] users in
-                   
-                        let usr = users.first
                         self.currentUser = users.first
                 }
                 .store(in: &bag)
-            
-            print ("HELLO \(currentUser?.name)")
         }
     }
     
@@ -82,7 +78,7 @@ class UsersManager: ObservableObject {
                     DispatchQueue.main.async {
                         currentUser = users.first
                         name = currentUser?.name
-                        print("HELLO fetch cur user \(currentUser?.username)")
+                        //print("HELLO fetch cur user \(currentUser?.username)")
                     }
                 }
                 .store(in: &bag)
@@ -100,7 +96,7 @@ class UsersManager: ObservableObject {
                 if case .failure(let error) = completion {
                     print("\(error.localizedDescription)")
                 }
-            } receiveValue: { [self] users in
+            } receiveValue: { users in
                 print("HELLO all users \(users)")
             }
             .store(in: &bag)
@@ -143,7 +139,7 @@ class UsersManager: ObservableObject {
             } receiveValue: { [self] success in
                 if success {
                     DispatchQueue.main.async {
-                        print("HELLO coreDataSave \(currentUser?.username)")
+                        //print("HELLO coreDataSave \(currentUser?.username)")
                         fetch(username: currentUser?.username)
                     }
                 }

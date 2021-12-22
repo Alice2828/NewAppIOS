@@ -81,6 +81,19 @@ class CoronaVM: ObservableObject {
         }
     }
     
+    func getDate(isoDate: String) -> String{
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX") // set locale to reliable US_POSIX
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        let date = dateFormatter.date(from:isoDate)!
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.month, .day, .year], from: date)
+        let finalDate = calendar.date(from:components)
+        dateFormatter.dateFormat = "dd.MMM, yyyy"
+        dateFormatter.dateStyle = .long
+        return dateFormatter.string(from: finalDate!)
+    }
+    
     func getKz(){
         state = .loading
         DispatchQueue.global(qos: .background).async { [self] in
@@ -96,25 +109,25 @@ class CoronaVM: ObservableObject {
                         var data3 = [ChartData]()
                         var data4 = [ChartData]()
                         
-                        let label1 = String(subList[size-4].Date.prefix(10))
+                        let label1 = getDate(isoDate: String(subList[size-4].Date))
                         data1.append(ChartData(id:1, label: label1, value: Double(subList[size-4].Confirmed)))
                         data1.append(ChartData(id:2, label: label1, value: Double(subList[size-4].Active)))
                         data1.append(ChartData(id:3, label: label1, value: Double(subList[size-4].Deaths)))
                         data1.append(ChartData(id:4, label: label1, value: Double(subList[size-4].Recovered)))
                         
-                        let label2 = String(subList[size-3].Date.prefix(10))
+                        let label2 = getDate(isoDate: String(subList[size-3].Date))
                         data2.append(ChartData(id:1, label: label2, value: Double(subList[size-3].Confirmed)))
                         data2.append(ChartData(id:2, label: label2, value: Double(subList[size-3].Active)))
                         data2.append(ChartData(id:3, label: label2, value: Double(subList[size-3].Deaths)))
                         data2.append(ChartData(id:4, label: label2, value: Double(subList[size-3].Recovered)))
                         
-                        let label3 = String(subList[size-2].Date.prefix(10))
+                        let label3 = getDate(isoDate: String(subList[size-2].Date))
                         data3.append(ChartData(id:1, label: label3, value: Double(subList[size-2].Confirmed)))
                         data3.append(ChartData(id:2, label: label3, value: Double(subList[size-2].Active)))
                         data3.append(ChartData(id:3, label: label3, value: Double(subList[size-2].Deaths)))
                         data3.append(ChartData(id:4, label: label3, value: Double(subList[size-2].Recovered)))
                         
-                        let label4 = String(subList[size-1].Date.prefix(10))
+                        let label4 = getDate(isoDate: String(subList[size-1].Date))
                         data4.append(ChartData(id:1, label: label4, value: Double(subList[size-1].Confirmed)))
                         data4.append(ChartData(id:2, label: label4, value: Double(subList[size-1].Active)))
                         data4.append(ChartData(id:3, label: label4, value: Double(subList[size-1].Deaths)))

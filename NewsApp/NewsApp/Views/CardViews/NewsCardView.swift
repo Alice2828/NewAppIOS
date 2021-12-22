@@ -88,6 +88,20 @@ struct NewsCardView: View {
 struct CardTextDescription: View{
     var article: Article
     
+    
+    func getDate(isoDate: String) -> String{
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX") // set locale to reliable US_POSIX
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        let date = dateFormatter.date(from:isoDate)!
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.month, .day, .year], from: date)
+        let finalDate = calendar.date(from:components)
+        dateFormatter.dateFormat = "dd.MMM, yyyy"
+        dateFormatter.dateStyle = .long
+        return dateFormatter.string(from: finalDate!)
+    }
+    
     var body: some View{
         VStack(alignment: .leading, spacing: 5) {
             if let title = article.title{
@@ -101,7 +115,7 @@ struct CardTextDescription: View{
                     .font(.custom("Avenir", size: 12))
             }
             if let publishedAt = article.publishedAt{
-                Text(publishedAt)
+                Text(getDate(isoDate: publishedAt))
                     .font(.custom("Avenir", size: 12))
                     .foregroundColor(SwiftUI.Color.gray)
             }
